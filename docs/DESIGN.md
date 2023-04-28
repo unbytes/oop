@@ -27,6 +27,7 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 - String: region
 - Methods:
   - Address(String city, String region)
+  - getters() and setters()
 
 **Branch:**
 
@@ -60,12 +61,10 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
   - setName(String name)
   - setAge(Integer age)
 
-**Product:**
+*Product:*
 
 - String: name
 - float: price
-- String[]: types
 - Methods:
-  - Product(String name, float price, String[] types)
-  - setName(String name)
-  - setPrice(float price)
+  - Product(String name, float price)
+  - getters() and setters()
