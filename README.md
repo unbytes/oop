@@ -29,3 +29,9 @@ Sendo assim, as funcionalidades que devem ser implementadas são as seguintes:
 - Listagem de filial por cidade.
 - Listagem de todos os produtos cadastrados.
 - Listagem dos produtos comprados por um cliente.
+
+## :building_construction: Structure
+
+- [Minicenário](docs/DESIGN.md)
+- Diagrama UML
+- Diagrama de pacotes
