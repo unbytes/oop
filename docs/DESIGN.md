@@ -50,16 +50,14 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 
 - String: name
 - Integer: age
-- String: id
-- Product[]: purchased_products
-- Product[]: products_queue
+- String: cpf
+- HashMap<Product, Integer>: purchasedProducts
 - Methods:
-  - Client(String name, Integer age, String id)
-  - addProductToQueue(Product product)
-  - buyProductsFromQueue()
-  - listAllPurchasedProducts()
-  - setName(String name)
-  - setAge(Integer age)
+  - buyProduct(Product product): void
+  - listPurchasedProducts(): void
+  - addProductToPurchasedProducts(Product product): void
+  - toString(): String
+  - getters() and setters()
 
 *Product:*
 
