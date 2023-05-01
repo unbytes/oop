@@ -11,9 +11,18 @@ public abstract class Store {
         branches.add(branch);
     }
 
-    // public static void removeBranch(Branch branch) {
-        
-    // }
+    public static void removeBranch(Branch branch) throws Exception{
+        if (this.isAuthenticated) {
+            if (this.branches.contains(branch)) {
+                this.branches.remove(branch);
+            } else {
+                throw new IllegalArgumentException("Branch not found");
+            }
+        } else {
+            throw new IllegalAccessException("You are not authenticated to remove a branch");
+        }
+
+    }
 
     public static void listAllBranches() {
         System.out.println("Branches:");
@@ -21,7 +30,7 @@ public abstract class Store {
             System.out.print(branch.toString());
         }
     }
-    
+
     public static void registerClient(Client client) {
         clients.add(client);
     }
