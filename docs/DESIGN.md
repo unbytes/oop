@@ -31,20 +31,22 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 
 **Branch:**
 
-- String name
 - Integer: id
 - String: password
 - Address: address
-- Product[]: products
-- final String[]: PRODUCT_TYPES
+- Boolean: isAuthenticated
+- HashMap<Product, Integer>: products
 - Methods:
-  - Branch(String password, String city, String region)
-  - registerProduct(Product product)
-  - searchProductByName(String name)
-  - listAllProductsSortedByName()
-  - deleteProduct(Product product)
-  - setName(String name)
-  - setAddress(Address address)
+  - listAllProducts(): void
+  - searchProductsByWord(String word): ArrayList&#60;Product&#62;
+  - searchProductByName(String name): Product
+  - addProduct(Product product): void
+  - removeProduct(Product product, Integer quantity): void
+  - buyProduct(Client client, Product product): void
+  - login(String password): Boolean
+  - logout(): void
+  - toString(): String
+  - getters() and setters()
 
 **Client:**
 

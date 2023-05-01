@@ -89,6 +89,11 @@ public class Branch {
         }        
     }
 
+    public void buyProduct(Client client, Product product) throws Exception {
+        removeProduct(product, 1);
+        client.addProductToPurchasedProducts(product);
+    }
+
     public Boolean login(String password) {
         if (this.password.equals(password)) {
             this.isAuthenticated = true;
@@ -123,6 +128,6 @@ public class Branch {
 
     @Override
     public String toString() {
-        return "Branch: " + this.id + "\n" + "Address: " + this.address.toString();
+        return "Branch: " + this.id + "; Address: " + this.address.toString();
     }
 }
