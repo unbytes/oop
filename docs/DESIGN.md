@@ -61,10 +61,19 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
   - setName(String name)
   - setAge(Integer age)
 
-*Product:*
+*(abstract)*
+**Product:**
 
 - String: name
 - float: price
 - Methods:
-  - Product(String name, float price)
+  - toString(): String
+  - getters() and setters()
+
+**Cosmetic(Product):**
+
+- String: brand
+- String: type
+- Boolean: containsSunProtectionFactor
+- Methods:
   - getters() and setters()
