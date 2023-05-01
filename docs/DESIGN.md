@@ -53,7 +53,6 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 - String: cpf
 - HashMap<Product, Integer>: purchasedProducts
 - Methods:
-  - buyProduct(Product product): void
   - listPurchasedProducts(): void
   - addProductToPurchasedProducts(Product product): void
   - toString(): String
