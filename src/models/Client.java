@@ -4,37 +4,14 @@ import java.util.HashMap;
 
 public class Client {
     private String name;
-    private String id;
+    private String cpf;
     private Integer age;
     private HashMap<Product, Integer> purchasedProducts = new HashMap<>();
-    private HashMap<Product, Integer> productsQueue = new HashMap<>();
 
-    public Client(String name, String id, Integer age) {
+    public Client(String name, String cpf, Integer age) {
         this.name = name;
-        this.id = id;
+        this.cpf = cpf;
         this.age = age;
-    }
-
-    public HashMap<Product, Integer> getProductsQueue() {
-        return this.productsQueue;
-    }
-
-    public void addProductToQueue(Product product) {
-        if (this.productsQueue.containsKey(product)) {
-            this.productsQueue.put(product, this.productsQueue.get(product) + 1);
-        } else {
-            this.productsQueue.put(product, 1);
-        }
-    }
-
-    public void removeProductFromQueue(Product product) {
-        if (this.productsQueue.containsKey(product)) {
-            if (this.productsQueue.get(product) > 1) {
-                this.productsQueue.put(product, this.productsQueue.get(product) - 1);
-            } else {
-                this.productsQueue.remove(product);
-            }
-        }
     }
 
     public HashMap<Product, Integer> getPurchasedProducts() {
@@ -47,6 +24,15 @@ public class Client {
         } else {
             this.purchasedProducts.put(product, 1);
         }
+    }
+
+    public void buyProduct(Product product) {
+        if (this.purchasedProducts.containsKey(product)) {
+            this.purchasedProducts.put(product, this.purchasedProducts.get(product) + 1);
+        } else {
+            this.purchasedProducts.put(product, 1);
+        }
+        // remove from stock
     }
 
     public String getName() {
@@ -67,16 +53,16 @@ public class Client {
         }
     }
 
-    public String getId() {
-        return this.id;
+    public String getCPF() {
+        return this.cpf;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
     public String toString() {
-        return "Name: " + this.name + "\n" + "ID: " + this.id + "\n" + "Age: " + this.age + "\n";
+        return "Name: " + this.name + "\n" + "CPF: " + this.cpf + "\n" + "Age: " + this.age + "\n";
     }
 }
