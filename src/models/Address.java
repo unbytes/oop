@@ -24,4 +24,9 @@ public class Address {
     public void setRegion(String newRegion) {
         this.region = newRegion;
     }
+
+    @Override
+    public String toString() {
+        return this.city + "; " + this.region + "\n";
+    }
 }
