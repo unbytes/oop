@@ -6,20 +6,23 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 
 ## Project Structure
 
+*(abstract)*
 **Store:**
 
-- String: name
-- Client[]: clients
-- Branch[]: branches
+- static final String: name
+- static final String: password
+- static ArrayList&#60;Branch&#62;: branches
+- static ArrayList&#60;Client&#62;: clients
 - Methods:
-  - Store(String name)
-  - showAllBranches()
-  - showAllCityBranches(String city)
-  - deleteBranch(String id, String password)
-  - registerClient(Client client)
-  - searchClientById(String id)
-  - deleteClient(Client client)
-  - showAllClientsSortedByName()
+  - static registerBranch(Branch branch): void
+  - static removeBranch(Branch branch, String pass): void
+  - static listAllBranches(): void
+  - static searchBranchesFromCity(String city): ArrayList&#60;Branch&#62;
+  - static listBranchesFromCity(String city): void
+  - static registerClient(Client client): void
+  - static removeClient(Client client): void
+  - static listAllClients(): void
+  - static getters() and setters()
 
 **Address:**
 
