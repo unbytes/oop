@@ -27,7 +27,26 @@ public abstract class Store {
     public static void listAllBranches() {
         System.out.println("Branches:");
         for (Branch branch : branches) {
-            System.out.print(branch.toString());
+            System.out.print("    " + branch.toString());
+        }
+    }
+
+    public static ArrayList<Branch> searchBranchesFromCity(String city) {
+        String manipulatedCity = city.toLowerCase().strip();
+
+        ArrayList<Branch> branchesFromCity = new ArrayList<Branch>();
+        for (Branch branch : branches) {
+            if (branch.getAddress().getCity().toLowerCase().strip().equals(manipulatedCity)) {
+                branchesFromCity.add(branch);
+            }
+        }
+        return branchesFromCity;
+    }
+
+    public static void listBranchesFromCity(String city) {
+        System.out.println("Branches from " + city.strip() + ":");
+        for (Branch branch : searchBranchesFromCity(city)) {
+            System.out.print("    " + branch.toString());
         }
     }
 
@@ -35,7 +54,7 @@ public abstract class Store {
         clients.add(client);
     }
 
-    public static void removeClient(Client client){
+    public static void removeClient(Client client) {
         clients.remove(client);
     }
 
