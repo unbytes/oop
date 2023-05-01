@@ -27,6 +27,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return this.city + "; " + this.region + "\n";
+        return this.city + " | " + this.region + "\n";
     }
 }
