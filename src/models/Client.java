@@ -33,15 +33,6 @@ public class Client {
         }
     }
 
-    public void buyProduct(Product product) {
-        if (this.purchasedProducts.containsKey(product)) {
-            this.purchasedProducts.put(product, this.purchasedProducts.get(product) + 1);
-        } else {
-            this.purchasedProducts.put(product, 1);
-        }
-        // remove from stock
-    }
-
     public String getName() {
         return this.name;
     }
