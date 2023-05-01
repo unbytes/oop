@@ -77,3 +77,11 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 - Boolean: containsSunProtectionFactor
 - Methods:
   - getters() and setters()
+
+**Medicament(Product):**
+
+- String: boxColor
+- Integer: dosageMl
+- Integer: minimumAge
+- Methods:
+  - getters() and setters()
