@@ -18,6 +18,13 @@ public class Client {
         return this.purchasedProducts;
     }
 
+    public void listPurchasedProducts() {
+        System.out.println("Purchased products by " + this.name + ":");
+        for (Product product : this.purchasedProducts.keySet()) {
+            System.out.println("    " + product.getName() + " (" + this.purchasedProducts.get(product) + ")");
+        }
+    }
+
     public void addProductToPurchasedProducts(Product product) {
         if (this.purchasedProducts.containsKey(product)) {
             this.purchasedProducts.put(product, this.purchasedProducts.get(product) + 1);
