@@ -26,7 +26,7 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 - String: city
 - String: region
 - Methods:
-  - Address(String city, String region)
+  - toString(): String
   - getters() and setters()
 
 **Branch:**
