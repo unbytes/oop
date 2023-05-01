@@ -1,11 +1,12 @@
 package models;
 
-public class Cosmetic {
+public class Cosmetic extends Product {
     private String brand;
     private String type;
     private Boolean containsSunProtectionFactor;
 
-    public Cosmetic(String brand, String type, Boolean containsSunProtectionFactor) {
+    public Cosmetic(String name, float price, String brand, String type, Boolean containsSunProtectionFactor) {
+        super(name, price);
         this.brand = brand;
         this.type = type;
         this.containsSunProtectionFactor = containsSunProtectionFactor;
