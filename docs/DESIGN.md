@@ -68,3 +68,11 @@ A rede de farmácia "Drogas Lícitas" precisa de um aplicativo para gerenciar su
 - Methods:
   - Product(String name, float price)
   - getters() and setters()
+
+**Medicament(Product):**
+
+- String: boxColor
+- Integer: dosageMl
+- Integer: minimumAge
+- Methods:
+  - getters() and setters()
