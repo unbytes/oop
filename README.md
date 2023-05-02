@@ -33,5 +33,5 @@ Sendo assim, as funcionalidades que devem ser implementadas são as seguintes:
 ## :building_construction: Structure
 
 - [Minicenário](docs/DESIGN.md)
-- Diagrama UML
+- [Diagrama UML](diagrama_de_classes.jpeg)
 - Diagrama de pacotes
