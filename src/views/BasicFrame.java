@@ -27,12 +27,15 @@ public abstract class BasicFrame extends JFrame {
         JLabel label = new JLabel("Drogas Lícitas");
         label.setFont(new Font("Arial", Font.BOLD, 30));
         label.setForeground(new Color(0, 0, 0));
+        label.setHorizontalAlignment(JLabel.CENTER);
 
         headerPanel.setBackground(new Color(218, 0, 55));
-        headerPanel.add(label, BorderLayout.WEST);
+        headerPanel.add(label, BorderLayout.CENTER);
 
         this.add(headerPanel, BorderLayout.NORTH);
     }
+
+    public abstract void makeBody();
 
     public void close() {
         this.dispose();
