@@ -47,8 +47,29 @@ public abstract class BasicFrame extends JFrame {
         footerPanel.setPreferredSize(new Dimension(0, 50));
         footerPanel.setBackground(redColor);
 
-        //createBackButton();
+        createBackButton();
 
         this.add(footerPanel, BorderLayout.SOUTH);
+    }
+
+    public void createBackButton() {
+        try {
+            ImageIcon icon = new ImageIcon("src/assets/return_white_button.png");
+            icon = new ImageIcon(icon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+
+            Button backButton = new Button(icon);
+            backButton.setPreferredSize(new Dimension(50, 50));
+            backButton.setBackground(redColor);
+            backButton.addActionListener(e -> {
+                if (!this.getClass().getSimpleName().equals("Home")) {
+                    this.dispose();
+                    new Home();
+                }
+            });
+
+            footerPanel.add(backButton, BorderLayout.EAST);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
