@@ -12,8 +12,8 @@ public abstract class BasicFrame extends JFrame {
     protected Color redColor = new Color(218, 0, 55);
 
     public BasicFrame() {
-        this.setResizable(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setMinimumSize(new Dimension(854, 480));
 
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
