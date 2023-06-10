@@ -5,8 +5,8 @@ import java.util.*;
 import views.components.Form;
 import views.layouts.BasicFrame;
 
-public class Branch extends BasicFrame {
-    public Branch() {
+public class CreateBranch extends BasicFrame{
+    public CreateBranch() {
         super();
         makeBody();
     }
