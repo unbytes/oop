@@ -5,8 +5,8 @@ import java.util.*;
 import views.components.Form;
 import views.layouts.BasicFrame;
 
-public class Branch extends BasicFrame {
-    public Branch() {
+public class LoginBranch extends BasicFrame{
+    public LoginBranch() {
         super();
         makeBody();
     }
@@ -15,20 +15,21 @@ public class Branch extends BasicFrame {
         bodyPanel.setLayout(new GridLayout(1, 2));
 
         createBranchForm();
+
         // createBranchList();
 
         this.add(bodyPanel, BorderLayout.CENTER);
     }
-
     public void createBranchForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
-                put("Address", Form.FieldTypes.TEXT);
+                put("UUID", Form.FieldTypes.TEXT);
                 put("Password", Form.FieldTypes.PASSWORD);
-                put("Confirm password", Form.FieldTypes.PASSWORD);
+
             }
         };
-        Form branchForm = new Form("Create Branch", components);
+        Form branchForm = new Form("Login Branch", components);
         bodyPanel.add(branchForm);
     }
+    
 }
