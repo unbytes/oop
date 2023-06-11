@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.*;
 
+import models.Address;
 import models.Branch;
 import models.Store;
 
@@ -24,5 +25,18 @@ public class BranchController {
         }
 
         return branchesAsHTMLTemplate;
+    }
+
+    public Branch getBranchByUUID(String branchUUID) {
+        ArrayList<Branch> branches = Store.getBranches();
+        Branch branch = branches.stream().filter(b -> b.getId().equals(branchUUID)).findFirst().orElse(null);
+
+        return branch;
+    }
+
+    public void registerBranch(String password, String city, String region) {
+        Address address = new Address(city, region);
+        Branch branch = new Branch(password, address);
+        Store.registerBranch(branch);
     }
 }
