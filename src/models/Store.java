@@ -24,11 +24,8 @@ public abstract class Store {
         }
     }
 
-    public static void listAllBranches() {
-        System.out.println("Branches:");
-        for (Branch branch : branches) {
-            System.out.print("    " + branch.toString());
-        }
+    public static ArrayList<Branch> getBranches() {
+        return branches;
     }
 
     public static ArrayList<Branch> searchBranchesFromCity(String city) {
@@ -43,13 +40,6 @@ public abstract class Store {
         return branchesFromCity;
     }
 
-    public static void listBranchesFromCity(String city) {
-        System.out.println("Branches from " + city.strip() + ":");
-        for (Branch branch : searchBranchesFromCity(city)) {
-            System.out.print("    " + branch.toString());
-        }
-    }
-
     public static void registerClient(Client client) {
         clients.add(client);
     }
@@ -58,11 +48,8 @@ public abstract class Store {
         clients.remove(client);
     }
 
-    public static void listAllClients() {
-        System.out.println("Clients:");
-        for (Client client : clients) {
-            System.out.print(client.toString());
-        }
+    public static ArrayList<Client> getClients() {
+        return clients;
     }
 
     public static String getName() {
