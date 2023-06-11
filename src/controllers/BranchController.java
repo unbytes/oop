@@ -39,4 +39,22 @@ public class BranchController {
         Branch branch = new Branch(password, address);
         Store.registerBranch(branch);
     }
+
+    public boolean authenticateBranch(String branchUUID, String password) {
+        Branch branch = getBranchByUUID(branchUUID);
+
+        if (branch != null) {
+            branch.login(password);
+        }
+
+        return branch.getIsAuthenticated();
+    }
+
+    public void logoutBranch(String branchUUID) {
+        Branch branch = getBranchByUUID(branchUUID);
+
+        if (branch != null) {
+            branch.logout();
+        }
+    }
 }
