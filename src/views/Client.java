@@ -14,13 +14,12 @@ public class Client extends BasicFrame {
     public void makeBody() {
         bodyPanel.setLayout(new GridLayout(1, 2));
 
-        createClientForm();
-        // createClientList();
+        makeSignUpForm();
 
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void createClientForm() {
+    public void makeSignUpForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
                 put("Name", Form.FieldTypes.TEXT);
@@ -28,7 +27,7 @@ public class Client extends BasicFrame {
                 put("CPF", Form.FieldTypes.TEXT);
             }
         };
-        Form clientForm = new Form("Register Client", components);
+        Form clientForm = new Form("Submit", "Register Client", components);
         bodyPanel.add(clientForm);
     }
 }
