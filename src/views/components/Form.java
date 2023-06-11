@@ -2,13 +2,12 @@ package views.components;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class Form extends JPanel {
     private Button submitButton;
     private GridBagConstraints gbc = new GridBagConstraints();
-    private ArrayList<JComponent> fields = new ArrayList<JComponent>();
+    private LinkedHashMap<String, JComponent> fields = new LinkedHashMap<String, JComponent>();
 
     public enum FieldTypes {
         TEXT, PASSWORD, INTEGER
@@ -21,24 +20,23 @@ public class Form extends JPanel {
         addSubmitButton();
     }
 
-    public Form(String title, LinkedHashMap<String, FieldTypes> components) {
-        submitButton = new Button("Submit");
-        setUp(title);
-        addComponents(components);
-        addSubmitButton();
-    }
-
     public void setUp(String title) {
         this.setBackground(Color.WHITE);
         this.setLayout(new GridBagLayout());
         gbc.insets = new Insets(8, 8, 8, 8);
 
-        JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        Title titleLabel = new Title(title);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         this.add(titleLabel, gbc);
+    }
+
+    public void setUpComponent(String name, JComponent component) {
+        component.setPreferredSize(new Dimension(200, 30));
+        component.setName(name);
+        fields.put(name, component);
+        this.add(component, gbc);
     }
 
     public void addComponents(LinkedHashMap<String, FieldTypes> components) {
@@ -53,23 +51,11 @@ public class Form extends JPanel {
             gbc.gridx = 1;
             FieldTypes type = components.get(key);
             if (type == FieldTypes.TEXT) {
-                JTextField textField = new JTextField();
-                textField.setPreferredSize(new Dimension(200, 30));
-                textField.setName(key);
-                this.fields.add(textField);
-                this.add(textField, gbc);
+                setUpComponent(key, new JTextField());
             } else if (type == FieldTypes.PASSWORD) {
-                JPasswordField passwordField = new JPasswordField();
-                passwordField.setPreferredSize(new Dimension(200, 30));
-                passwordField.setName(key);
-                this.fields.add(passwordField);
-                this.add(passwordField, gbc);
+                setUpComponent(key, new JPasswordField());
             } else if (type == FieldTypes.INTEGER) {
-                IntegerField integerField = new IntegerField();
-                integerField.setPreferredSize(new Dimension(200, 30));
-                integerField.setName(key);
-                this.fields.add(integerField);
-                this.add(integerField, gbc);
+                setUpComponent(key, new IntegerField());
             } else {
                 throw new Error("Invalid component type");
             }
@@ -85,19 +71,19 @@ public class Form extends JPanel {
 
     public LinkedHashMap<String, String> retrieveFieldValues() {
         LinkedHashMap<String, String> fieldValues = new LinkedHashMap<String, String>();
-        for (JComponent component : getFields()) {
+        for (JComponent component : getFields().values()) {
             if (component instanceof JPasswordField) {
                 JPasswordField passwordField = (JPasswordField) component;
                 fieldValues.put(passwordField.getName(), String.valueOf(passwordField.getPassword()));
             } else {
-                JTextField field = (JTextField) component;
-                fieldValues.put(field.getName(), field.getText());
+                JTextField textField = (JTextField) component;
+                fieldValues.put(textField.getName(), textField.getText());
             }
         }
         return fieldValues;
     }
 
-    public ArrayList<JComponent> getFields() {
+    public LinkedHashMap<String, JComponent> getFields() {
         return this.fields;
     }
 
