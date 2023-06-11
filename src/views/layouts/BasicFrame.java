@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import views.Home;
 import views.components.Button;
+import views.components.Title;
 
 public abstract class BasicFrame extends JFrame {
     protected JPanel headerPanel = new JPanel();
@@ -29,10 +30,9 @@ public abstract class BasicFrame extends JFrame {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(0, 50));
 
-        JLabel label = new JLabel("Drogas Lícitas");
+        Title label = new Title("Drogas Lícitas");
         label.setFont(new Font("Arial", Font.BOLD, 30));
         label.setForeground(new Color(12, 12, 12));
-        label.setHorizontalAlignment(JLabel.CENTER);
 
         headerPanel.setBackground(redColor);
         headerPanel.add(label, BorderLayout.CENTER);
