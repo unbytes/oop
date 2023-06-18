@@ -7,12 +7,14 @@ import models.Branch;
 import models.Store;
 
 public class BranchController {
-    public HashMap<String, String> getBranchesAsHTMLTemplate() {
-        HashMap<String, String> branchesAsHTMLTemplate = new HashMap<String, String>();
-
+    public String[] getBranchesAsHTMLTemplate() {
         ArrayList<Branch> branches = Store.getBranches();
-        for (Branch branch : branches) {
-            String text = String.format("""
+        Integer numberOfBranches = Store.getBranches().size();
+
+        String branchesAsHTMLTemplate[] = new String[numberOfBranches];
+        for (Integer index = 0; index < numberOfBranches; index++) {
+            Branch branch = branches.get(index);
+            String HTMLTemplate = String.format("""
                     <html>
                         <body>
                             UUID: %s
@@ -21,7 +23,7 @@ public class BranchController {
                         </body>
                     </html>
                     """, branch.getId(), branch.getAddress().toString());
-            branchesAsHTMLTemplate.put(branch.getId(), text);
+            branchesAsHTMLTemplate[index] = HTMLTemplate;
         }
 
         return branchesAsHTMLTemplate;
