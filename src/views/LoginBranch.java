@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 import controllers.BranchController;
 import views.components.Title;
@@ -25,18 +24,10 @@ public class LoginBranch extends BasicFrame {
     }
 
     public void makeBranchList() {
-        Title titleLabel = new Title("Branches");
+        Title titleLabel = new Title("Filiais");
         bodyPanel.add(titleLabel, BorderLayout.NORTH);
-
-        HashMap<String, String> branchesAsHTMLTemplate = branchController.getBranchesAsHTMLTemplate();
-        String branches[] = new String[branchesAsHTMLTemplate.values().size()];
-
-        Integer index = 0;
-        for (String branch : branchesAsHTMLTemplate.values()) {
-            branches[index] = branch;
-            index++;
-        }
-        JList<String> branchList = new JList<String>(branches);
+        
+        JList<String> branchList = new JList<String>(branchController.getBranchesAsHTMLTemplate());
         bodyPanel.add(branchList, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
