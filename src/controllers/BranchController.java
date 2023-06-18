@@ -4,6 +4,7 @@ import java.util.*;
 
 import models.Address;
 import models.Branch;
+import models.Product;
 import models.Store;
 
 public class BranchController {
@@ -27,6 +28,34 @@ public class BranchController {
         }
 
         return branchesAsHTMLTemplate;
+    }
+
+    public String[] searchProductsByWordAsHTMLTemplate(String branchUUID, String word) {
+        Branch branch = getBranchByUUID(branchUUID);
+        ArrayList<Product> searchedProducts = branch.searchProductsByWord(word);
+        if (searchedProducts == null) {
+            return null;
+        }
+        
+        Integer numberOfProducts = searchedProducts.size();
+        String productsAsHTMLTemplate[] = new String[numberOfProducts];
+        for (Integer index = 0; index < numberOfProducts; index++) {
+            Product product = searchedProducts.get(index);
+            String HTMLTemplate = String.format("""
+                    <html>
+                        <body>
+                            Produto: %s
+                            <br>
+                            Preço: %.2f
+                            <br>
+                            Quantidade: %d
+                        </body>
+                    </html>
+                    """, product.getName(), product.getPrice(), branch.getProducts().get(product));
+            productsAsHTMLTemplate[index] = HTMLTemplate;
+        }
+
+        return productsAsHTMLTemplate;
     }
 
     public Branch getBranchByUUID(String branchUUID) {
