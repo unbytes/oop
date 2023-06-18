@@ -36,6 +36,15 @@ public class Main {
             Store.registerClient(client);
         }
 
+        branch1.login(password);
+        branch1.addProduct(dipirona);
+        branch1.addProduct(ipubrofeno);
+        branch1.logout();
+
+        branch2.login(password);
+        branch2.addProduct(originalCare);
+        branch2.logout();
+
         new Home();
     }
 }

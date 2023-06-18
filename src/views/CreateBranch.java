@@ -32,7 +32,7 @@ public class CreateBranch extends BasicFrame {
                 put("Confirmar senha", Form.FieldTypes.PASSWORD);
             }
         };
-        Form branchForm = new Form("Submit", "Create Branch", components);
+        Form branchForm = new Form("Criar", "Criar Filial", components);
         bodyPanel.add(branchForm);
 
         JButton submitButton = branchForm.getSubmitButton();

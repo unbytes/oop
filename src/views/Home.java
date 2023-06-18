@@ -16,15 +16,7 @@ public class Home extends BasicFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        Button createBranchButton = new Button("Create Branch");
-        createBranchButton.addActionListener(e -> {
-            this.dispose();
-            new CreateBranch();
-        });
-        gbc.gridy = 0;
-        bodyPanel.add(createBranchButton, gbc);
-
-        Button loginBranchesButton = new Button("Login Branch");
+        Button loginBranchesButton = new Button("Filiais");
         loginBranchesButton.addActionListener(e -> {
             this.dispose();
             new LoginBranch();
@@ -32,7 +24,7 @@ public class Home extends BasicFrame {
         gbc.gridy = 1;
         bodyPanel.add(loginBranchesButton, gbc);
 
-        Button clientsButton = new Button("Access Clients");
+        Button clientsButton = new Button("Clientes");
         clientsButton.addActionListener(e -> {
             this.dispose();
             new Client();
