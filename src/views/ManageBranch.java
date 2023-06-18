@@ -2,11 +2,9 @@ package views;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 import controllers.BranchController;
 import models.Branch;
-import models.Product;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
@@ -47,34 +45,14 @@ public class ManageBranch extends BasicFrame {
         Action searchAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HashMap<Product, Integer> branchProducts = branch.getProducts();
-
                 String productSearchName = searchField.getText();
-                ArrayList<Product> searchedProducts = branch.searchProductsByWord(productSearchName);
+                String searchedProducts[] = branchController.searchProductsByWordAsHTMLTemplate(branch.getId(), productSearchName);
 
                 productListPanel.removeAll();
                 if (searchedProducts == null) {
                     productListPanel.add(new JLabel("Nenhum produto encontrado"));
                 } else {
-                    String products[] = new String[searchedProducts.size()];
-
-                    Integer index = 0;
-                    for (Product product : searchedProducts) {
-                        String productAsHTMLTemplate = String.format("""
-                                <html>
-                                    <body>
-                                        Produto: %s
-                                        <br>
-                                        Preço: %.2f
-                                        <br>
-                                        Quantidade: %d
-                                    </body>
-                                </html>
-                                """, product.getName(), product.getPrice(), branchProducts.get(product));
-                        products[index] = productAsHTMLTemplate;
-                        index++;
-                    }
-                    JList<String> productList = new JList<String>(products);
+                    JList<String> productList = new JList<String>(searchedProducts);
                     productListPanel.add(productList);
                 }
                 productListPanel.repaint();
