@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import controllers.BranchController;
-import views.components.Button;
 import views.components.Title;
+import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class LoginBranch extends BasicFrame {
@@ -25,37 +25,39 @@ public class LoginBranch extends BasicFrame {
     }
 
     public void makeBranchList() {
-        JPanel branchListPanel = new JPanel();
-        branchListPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
-
         Title titleLabel = new Title("Branches");
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        branchListPanel.add(titleLabel, gbc);
+        bodyPanel.add(titleLabel, BorderLayout.NORTH);
 
-        gbc.gridwidth = 1;
         HashMap<String, String> branchesAsHTMLTemplate = branchController.getBranchesAsHTMLTemplate();
-        for (String branchUUID : branchesAsHTMLTemplate.keySet()) {
-            gbc.gridx = 0;
-            gbc.gridy++;
-            JLabel label = new JLabel();
-            label.setPreferredSize(new Dimension(350, 30));
-            label.setText(branchesAsHTMLTemplate.get(branchUUID));
-            branchListPanel.add(label, gbc);
+        String branches[] = new String[branchesAsHTMLTemplate.values().size()];
 
-            gbc.gridx = 1;
-            Button button = new Button("Login");
-            button.setName(branchUUID);
-            button.setPreferredSize(new Dimension(80, 30));
-            button.addActionListener(e -> handleBranchPopUpLogin(branchUUID));
-            branchListPanel.add(button, gbc);
+        Integer index = 0;
+        for (String branch : branchesAsHTMLTemplate.values()) {
+            branches[index] = branch;
+            index++;
         }
+        JList<String> branchList = new JList<String>(branches);
+        bodyPanel.add(branchList, BorderLayout.CENTER);
 
-        JScrollPane scrollPane = new JScrollPane(branchListPanel);
-        bodyPanel.add(scrollPane);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setBackground(Color.WHITE);
+        bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        Button registerButton = new Button("Criar nova");
+        registerButton.addActionListener(e -> {
+            this.dispose();
+            new CreateBranch();
+        });
+        buttonPanel.add(registerButton);
+
+        Button loginButton = new Button("Logar");
+        loginButton.addActionListener(e -> {
+            String selectedValue = branchList.getSelectedValue();
+            String branchUUID = selectedValue.split("<br>")[0].split(": ")[1].trim();
+            handleBranchPopUpLogin(branchUUID);
+        });
+        buttonPanel.add(loginButton);
     }
 
     public void handleBranchPopUpLogin(String branchUUID) {
