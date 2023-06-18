@@ -21,6 +21,7 @@ public abstract class BasicFrame extends JFrame {
 
         makeHeader();
         makeFooter();
+        bodyPanel.setBackground(Color.WHITE);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
