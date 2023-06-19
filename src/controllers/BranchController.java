@@ -88,4 +88,16 @@ public class BranchController {
             branch.logout();
         }
     }
+
+    public boolean authenticateStore(String password){
+        if (password.equals(Store.getpassword())){
+            return true;
+        } else return false;
+    }
+
+    public void removeBranch(String branchUUID) {
+
+        Branch branch = getBranchByUUID(branchUUID);
+        Store.removeBranch(branch);
+    }
 }
