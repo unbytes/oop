@@ -49,6 +49,15 @@ public class LoginBranch extends BasicFrame {
             handleBranchPopUpLogin(branchUUID);
         });
         buttonPanel.add(loginButton);
+
+        Button deleteButton = new Button("Deletar");
+        deleteButton.addActionListener(e -> {
+            String selectedValue = branchList.getSelectedValue();
+            String branchUUID = selectedValue.split("<br>")[0].split(": ")[1].trim();
+            handleBranchPopUpDelete(branchUUID);
+        });
+        buttonPanel.add(deleteButton);
+
     }
 
     public void handleBranchPopUpLogin(String branchUUID) {
@@ -66,5 +75,24 @@ public class LoginBranch extends BasicFrame {
                 JOptionPane.showMessageDialog(null, "Wrong password");
             }
         }
+    }
+
+    public void handleBranchPopUpDelete(String branchUUID){
+        JPasswordField passwordField = new JPasswordField();
+        int option = JOptionPane.showOptionDialog(null, passwordField, "Enter Store Password",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+        if (option == JOptionPane.OK_OPTION) {
+            String password = new String(passwordField.getPassword());
+            boolean response = branchController.authenticateStore(password);
+            if (response) {
+                branchController.removeBranch(branchUUID);
+                this.dispose();
+                new LoginBranch();
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong password");
+            }
+        }
+
     }
 }
