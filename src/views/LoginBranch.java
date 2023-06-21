@@ -3,11 +3,13 @@ package views;
 import java.awt.*;
 import javax.swing.*;
 import controllers.BranchController;
+import controllers.StoreController;
 import views.components.Title;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class LoginBranch extends BasicFrame {
+    private StoreController storeController = new StoreController();
     private BranchController branchController = new BranchController();
 
     public LoginBranch() {
@@ -27,7 +29,7 @@ public class LoginBranch extends BasicFrame {
         Title titleLabel = new Title("Filiais");
         bodyPanel.add(titleLabel, BorderLayout.NORTH);
         
-        JList<String> branchList = new JList<String>(branchController.getBranchesAsHTMLTemplate());
+        JList<String> branchList = new JList<String>(storeController.getBranchesAsHTMLTemplate());
         bodyPanel.add(branchList, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
@@ -62,7 +64,7 @@ public class LoginBranch extends BasicFrame {
 
     public void handleBranchPopUpLogin(String branchUUID) {
         JPasswordField passwordField = new JPasswordField();
-        int option = JOptionPane.showOptionDialog(null, passwordField, "Enter Password",
+        int option = JOptionPane.showOptionDialog(null, passwordField, "Senha: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (option == JOptionPane.OK_OPTION) {
@@ -72,25 +74,25 @@ public class LoginBranch extends BasicFrame {
                 this.dispose();
                 new ManageBranch(branchUUID);
             } else {
-                JOptionPane.showMessageDialog(null, "Wrong password");
+                JOptionPane.showMessageDialog(null, "Senha incorreta");
             }
         }
     }
 
     public void handleBranchPopUpDelete(String branchUUID){
         JPasswordField passwordField = new JPasswordField();
-        int option = JOptionPane.showOptionDialog(null, passwordField, "Enter Store Password",
+        int option = JOptionPane.showOptionDialog(null, passwordField, "Digite a senha da rede:",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (option == JOptionPane.OK_OPTION) {
             String password = new String(passwordField.getPassword());
-            boolean response = branchController.authenticateStore(password);
+            boolean response = storeController.authenticateStore(password);
             if (response) {
-                branchController.removeBranch(branchUUID);
+                storeController.removeBranch(branchUUID);
                 this.dispose();
                 new LoginBranch();
             } else {
-                JOptionPane.showMessageDialog(null, "Wrong password");
+                JOptionPane.showMessageDialog(null, "Senha incorreta");
             }
         }
 
