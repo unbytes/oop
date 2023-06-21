@@ -6,6 +6,7 @@ import javax.swing.*;
 import controllers.BranchController;
 import models.Branch;
 import views.components.Title;
+import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class ManageBranch extends BasicFrame {
@@ -75,8 +76,39 @@ public class ManageBranch extends BasicFrame {
         Title branchName = new Title("Filial: " + branch.getId());
         branchInfoHeaderPanel.add(branchName);
 
-        Title branchAddress = new Title("Endereço: " + branch.getAddress().toString());
-        branchInfoHeaderPanel.add(branchAddress);
+        JPanel addressPanel = new JPanel();
+        addressPanel.setBackground(Color.WHITE);
+        addressPanel.setLayout(new FlowLayout());
+
+        Title branchAddress = new Title("Endereço: ");
+        addressPanel.add(branchAddress);
+
+        String branchCity = branch.getAddress().getCity();
+        JTextField updateCityField = new JTextField(branchCity, 10);
+        addressPanel.add(updateCityField);
+
+        String branchRegion = branch.getAddress().getRegion();
+        JTextField updateRegionField = new JTextField(branchRegion, 10);
+        addressPanel.add(updateRegionField);
+
+        Button updateAddressButton = new Button("Atualizar");
+        updateAddressButton.setPreferredSize(new Dimension(100, 20));
+        updateAddressButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newCity = updateCityField.getText();
+                String newRegion = updateRegionField.getText();
+                boolean response = branchController.updateBranchAddress(branch, newCity, newRegion);
+                if (response) {
+                    JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar endereço");
+                }
+            }
+        });
+        addressPanel.add(updateAddressButton);
+
+        branchInfoHeaderPanel.add(addressPanel);
 
         bodyPanel.add(branchInfoHeaderPanel, BorderLayout.NORTH);
     }

@@ -114,12 +114,12 @@ public class Branch {
         return this.address;
     }
 
-    public void setAddress(Address address) throws Exception {
+    public boolean setAddress(Address address) {
         if (this.isAuthenticated) {
             this.address = address;
-        } else {
-            throw new Exception("You are not authenticated");
+            return true;
         }
+        return false;
     }
 
     public Boolean getIsAuthenticated() {

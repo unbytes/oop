@@ -27,6 +27,7 @@ public class BranchController {
                             Preço: %.2f
                             <br>
                             Quantidade: %d
+                            <br> 
                         </body>
                     </html>
                     """, product.getName(), product.getPrice(), branch.getProducts().get(product));
@@ -64,5 +65,10 @@ public class BranchController {
         if (branch != null) {
             branch.logout();
         }
+    }
+
+    public boolean updateBranchAddress(Branch branch, String newCity, String newRegion) {
+        Address newAddress = new Address(newCity, newRegion);
+        return branch.setAddress(newAddress);
     }
 }
