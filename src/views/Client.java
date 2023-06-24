@@ -1,33 +1,74 @@
 package views;
 
 import java.awt.*;
-import java.util.*;
-import views.components.Form;
+import javax.swing.*;
+import controllers.StoreController;
+import views.components.Title;
+import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class Client extends BasicFrame {
+    private StoreController storeController = new StoreController();
+    private JList<String> clientList;
+
     public Client() {
         super();
         makeBody();
     }
 
     public void makeBody() {
-        bodyPanel.setLayout(new GridLayout(1, 2));
+        bodyPanel.setLayout(new BorderLayout());
 
-        makeSignUpForm();
+        makeClientList();
 
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void makeSignUpForm() {
-        LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
-            {
-                put("Name", Form.FieldTypes.TEXT);
-                put("Age", Form.FieldTypes.INTEGER);
-                put("CPF", Form.FieldTypes.TEXT);
-            }
-        };
-        Form clientForm = new Form("Submit", "Register Client", components);
-        bodyPanel.add(clientForm);
+    public void makeClientList() {
+        Title titleLabel = new Title("Clientes");
+        bodyPanel.add(titleLabel, BorderLayout.NORTH);
+
+        clientList = new JList<String>(storeController.getClientesAsHTMLTemplate());
+        bodyPanel.add(clientList, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setBackground(Color.WHITE);
+        bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        Button registerButton = new Button("Cadastrar");
+        registerButton.addActionListener(e -> {
+            this.dispose();
+            new CreateClient();
+        });
+        buttonPanel.add(registerButton);
+
+        Button loginButton = new Button("Entrar");
+        loginButton.addActionListener(e -> {
+            String selectedValue = clientList.getSelectedValue();
+            String clientCPF = selectedValue.split("<br>")[0].split(": ")[1].trim();
+            handleClientPopUpLogin(clientCPF);
+        });
+        buttonPanel.add(loginButton);
+
+        Button deleteButton = new Button("Deletar");
+        deleteButton.addActionListener(e -> {
+            String selectedValue = clientList.getSelectedValue();
+            String clientCPF = selectedValue.split("<br>")[0].split(": ")[1].trim();
+            handleClientPopUpDelete(clientCPF);
+        });
+        buttonPanel.add(deleteButton);
+
+    }
+
+    public void handleClientPopUpLogin(String clientCPF) {
+        String clientName = storeController.getClientName(clientCPF);
+        JOptionPane.showMessageDialog(null, "Bem vindo, " + clientName);
+    }
+
+    public void handleClientPopUpDelete(String clientCPF) {
+        storeController.removeClient(clientCPF);
+        clientList.setListData(storeController.getClientesAsHTMLTemplate());
+        JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
     }
 }
