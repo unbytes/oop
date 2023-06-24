@@ -11,6 +11,7 @@ import views.layouts.BasicFrame;
 public class LoginBranch extends BasicFrame {
     private StoreController storeController = new StoreController();
     private BranchController branchController = new BranchController();
+    private JList<String> branchList;
 
     public LoginBranch() {
         super();
@@ -29,7 +30,7 @@ public class LoginBranch extends BasicFrame {
         Title titleLabel = new Title("Filiais");
         bodyPanel.add(titleLabel, BorderLayout.NORTH);
         
-        JList<String> branchList = new JList<String>(storeController.getBranchesAsHTMLTemplate());
+        branchList = new JList<String>(storeController.getBranchesAsHTMLTemplate());
         bodyPanel.add(branchList, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
@@ -59,7 +60,6 @@ public class LoginBranch extends BasicFrame {
             handleBranchPopUpDelete(branchUUID);
         });
         buttonPanel.add(deleteButton);
-
     }
 
     public void handleBranchPopUpLogin(String branchUUID) {
@@ -89,8 +89,7 @@ public class LoginBranch extends BasicFrame {
             boolean response = storeController.authenticateStore(password);
             if (response) {
                 storeController.removeBranch(branchUUID);
-                this.dispose();
-                new LoginBranch();
+                branchList.setListData(storeController.getBranchesAsHTMLTemplate());
             } else {
                 JOptionPane.showMessageDialog(null, "Senha incorreta");
             }

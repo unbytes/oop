@@ -4,66 +4,55 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import controllers.BranchController;
-import models.Branch;
 import views.components.Title;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class ManageBranch extends BasicFrame {
+    private GridBagConstraints gbc = new GridBagConstraints();
     private BranchController branchController = new BranchController();
-    private Branch branch;
+    private String branchUUID;
 
     public ManageBranch(String branchUUID) {
         super();
 
-        branch = branchController.getBranchByUUID(branchUUID);
+        this.branchUUID = branchUUID;
 
         makeBody();
         logoutBranchWhenWindowClose(branchUUID);
     }
 
     public void makeBody() {
-        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.setLayout(new GridBagLayout());
+        gbc.insets = new Insets(10, 10, 10, 10);
+
         makeBranchInfoHeader();
 
-        JPanel branchBodyPanel = new JPanel();
-        branchBodyPanel.setLayout(new BorderLayout());
-        branchBodyPanel.setBackground(Color.WHITE);
-        bodyPanel.add(branchBodyPanel, BorderLayout.CENTER);
+        JPanel branchesButtonsPanel = new JPanel();
+        branchesButtonsPanel.setBackground(Color.WHITE);
 
-        JPanel productListPanel = new JPanel();
-        productListPanel.setBackground(Color.WHITE);
-        branchBodyPanel.add(productListPanel, BorderLayout.CENTER);
-
-        JPanel searchPanel = new JPanel();
-        searchPanel.setBackground(Color.WHITE);
-        searchPanel.setLayout(new FlowLayout());
-
-        JLabel searchLabel = new JLabel("Nome do produto: ");
-        searchPanel.add(searchLabel);
-
-        JTextField searchField = new JTextField(20);
-        Action searchAction = new AbstractAction() {
+        Button clientsButton = new Button("Clientes");
+        branchesButtonsPanel.add(clientsButton);
+        clientsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String productSearchName = searchField.getText();
-                String searchedProducts[] = branchController.searchProductsByWordAsHTMLTemplate(branch.getId(), productSearchName);
-
-                productListPanel.removeAll();
-                if (searchedProducts == null) {
-                    productListPanel.add(new JLabel("Nenhum produto encontrado"));
-                } else {
-                    JList<String> productList = new JList<String>(searchedProducts);
-                    productListPanel.add(productList);
-                }
-                productListPanel.repaint();
-                productListPanel.revalidate();
+                dispose();
+                new Client();
             }
-        };
-        searchField.addActionListener(searchAction);
-        searchPanel.add(searchField);
+        });
 
-        branchBodyPanel.add(searchPanel, BorderLayout.NORTH);
+        Button productsButton = new Button("Produtos");
+        branchesButtonsPanel.add(productsButton);
+        productsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new Product(branchUUID);
+            }
+        });
+
+        gbc.gridy = 1;
+        bodyPanel.add(branchesButtonsPanel, gbc);
 
         this.add(bodyPanel, BorderLayout.CENTER);
     }
@@ -73,7 +62,7 @@ public class ManageBranch extends BasicFrame {
         branchInfoHeaderPanel.setBackground(Color.WHITE);
         branchInfoHeaderPanel.setLayout(new GridLayout(2, 1));
 
-        Title branchName = new Title("Filial: " + branch.getId());
+        Title branchName = new Title("Filial: " + branchUUID);
         branchInfoHeaderPanel.add(branchName);
 
         JPanel addressPanel = new JPanel();
@@ -83,11 +72,11 @@ public class ManageBranch extends BasicFrame {
         Title branchAddress = new Title("Endereço: ");
         addressPanel.add(branchAddress);
 
-        String branchCity = branch.getAddress().getCity();
+        String branchCity = branchController.getBranchCity(branchUUID);
         JTextField updateCityField = new JTextField(branchCity, 10);
         addressPanel.add(updateCityField);
 
-        String branchRegion = branch.getAddress().getRegion();
+        String branchRegion = branchController.getBranchRegion(branchUUID);
         JTextField updateRegionField = new JTextField(branchRegion, 10);
         addressPanel.add(updateRegionField);
 
@@ -98,7 +87,7 @@ public class ManageBranch extends BasicFrame {
             public void actionPerformed(ActionEvent e) {
                 String newCity = updateCityField.getText();
                 String newRegion = updateRegionField.getText();
-                boolean response = branchController.updateBranchAddress(branch, newCity, newRegion);
+                boolean response = branchController.updateBranchAddress(branchUUID, newCity, newRegion);
                 if (response) {
                     JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso");
                 } else {
@@ -110,7 +99,9 @@ public class ManageBranch extends BasicFrame {
 
         branchInfoHeaderPanel.add(addressPanel);
 
-        bodyPanel.add(branchInfoHeaderPanel, BorderLayout.NORTH);
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.weighty = 1;
+        bodyPanel.add(branchInfoHeaderPanel, gbc);
     }
 
     public void logoutBranchWhenWindowClose(String branchUUID) {
