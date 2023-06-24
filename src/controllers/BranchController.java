@@ -67,8 +67,19 @@ public class BranchController {
         }
     }
 
-    public boolean updateBranchAddress(Branch branch, String newCity, String newRegion) {
+    public boolean updateBranchAddress(String branchUUID, String newCity, String newRegion) {
         Address newAddress = new Address(newCity, newRegion);
+        Branch branch = getBranchByUUID(branchUUID);
         return branch.setAddress(newAddress);
+    }
+
+    public String getBranchCity(String branchUUID) {
+        Branch branch = getBranchByUUID(branchUUID);
+        return branch.getAddress().getCity();
+    }
+
+    public String getBranchRegion(String branchUUID) {
+        Branch branch = getBranchByUUID(branchUUID);
+        return branch.getAddress().getRegion();
     }
 }
