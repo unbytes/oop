@@ -49,6 +49,27 @@ public class Product extends BasicFrame {
         searchPanel.add(searchLabel);
 
         JTextField searchField = new JTextField(20);
+
+        String products[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID,"");
+        if (products == null) {
+            productListPanel.add(new JLabel("Nenhum produto cadastrado"));
+        } else {
+            JList<String> productList = new JList<String>(products);
+            productListPanel.add(productList);
+        }
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setBackground(Color.WHITE);
+        bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        Button createProductButton = new Button("Cadastrar produto");
+        createProductButton.addActionListener(e -> {
+            this.dispose();
+            new CreateProduct(branchUUID);
+        });
+        buttonPanel.add(createProductButton, BorderLayout.SOUTH);
+
         Action searchAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

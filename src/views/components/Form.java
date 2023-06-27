@@ -8,13 +8,22 @@ public class Form extends JPanel {
     private Button submitButton;
     private GridBagConstraints gbc = new GridBagConstraints();
     private LinkedHashMap<String, JComponent> fields = new LinkedHashMap<String, JComponent>();
+    private HashMap<String, String[]> comboBoxOptions = new HashMap<String, String[]>();
 
     public enum FieldTypes {
-        TEXT, PASSWORD, INTEGER
+        TEXT, PASSWORD, INTEGER, COMBOBOX
     }
 
     public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components) {
         submitButton = new Button(buttonText);
+        setUp(title);
+        addComponents(components);
+        addSubmitButton();
+    }
+
+    public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components, HashMap<String, String[]> comboBoxOptions) {
+        submitButton = new Button(buttonText);
+        this.comboBoxOptions = comboBoxOptions;
         setUp(title);
         addComponents(components);
         addSubmitButton();
@@ -56,6 +65,8 @@ public class Form extends JPanel {
                 setUpComponent(key, new JPasswordField());
             } else if (type == FieldTypes.INTEGER) {
                 setUpComponent(key, new IntegerField());
+            } else if (type == FieldTypes.COMBOBOX){
+                setUpComponent(key, new JComboBox<String>(comboBoxOptions.get(key)));
             } else {
                 throw new Error("Invalid component type");
             }
@@ -75,6 +86,10 @@ public class Form extends JPanel {
             if (component instanceof JPasswordField) {
                 JPasswordField passwordField = (JPasswordField) component;
                 fieldValues.put(passwordField.getName(), String.valueOf(passwordField.getPassword()));
+            } else if(component instanceof JComboBox) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) component;
+                fieldValues.put(comboBox.getName(), (String) comboBox.getSelectedItem());
             } else {
                 JTextField textField = (JTextField) component;
                 fieldValues.put(textField.getName(), textField.getText());

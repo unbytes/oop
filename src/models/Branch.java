@@ -21,17 +21,6 @@ public class Branch {
         return this.products;
     }
 
-    public void listAllProducts() {
-        if (this.products.size() > 0) {
-            System.out.println("Products:");
-            for (Product product : this.products.keySet()) {
-                System.out.println("    " + product.toString() + "; Quantity: " + this.products.get(product));
-            }
-        } else {
-            System.out.println("No products found in " + this.id + " branch");
-        }
-    }
-
     public ArrayList<Product> searchProductsByWord(String word) {
         String manipulatedWord = word.toLowerCase().strip();
         ArrayList<Product> products = new ArrayList<Product>();
@@ -43,6 +32,7 @@ public class Branch {
         }
 
         if (products.size() > 0) {
+            products.sort((product1, product2) -> product1.getName().toLowerCase().compareTo(product2.getName().toLowerCase()));
             return products;
         } else {
             return null;
@@ -61,17 +51,10 @@ public class Branch {
         return null;
     }
 
-    public void addProduct(Product product) throws Exception {
-        if (this.isAuthenticated) {
-            if (this.products.containsKey(product)) {
-                this.products.put(product, this.products.get(product) + 1);
-            } else {
-                this.products.put(product, 1);
-            }
-        } else {
-            throw new Exception("You are not authenticated");
-        }
+    public void addProduct(Product product, Integer productsquantity){
+        this.products.put(product, productsquantity);
     }
+    
 
     public void removeProduct(Product product, Integer quantity) throws Exception {
         if (this.isAuthenticated) {
