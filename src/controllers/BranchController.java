@@ -1,20 +1,21 @@
 package controllers;
 
 import java.util.*;
-
 import models.Address;
 import models.Branch;
+import models.Cosmetic;
+import models.Medicament;
 import models.Product;
 import models.Store;
 
 public class BranchController {
+    
     public String[] searchProductsByWordAsHTMLTemplate(String branchUUID, String word) {
         Branch branch = getBranchByUUID(branchUUID);
         ArrayList<Product> searchedProducts = branch.searchProductsByWord(word);
         if (searchedProducts == null) {
             return null;
         }
-        
         Integer numberOfProducts = searchedProducts.size();
         String productsAsHTMLTemplate[] = new String[numberOfProducts];
         for (Integer index = 0; index < numberOfProducts; index++) {
@@ -22,6 +23,8 @@ public class BranchController {
             String HTMLTemplate = String.format("""
                     <html>
                         <body>
+                            Tipo de Produto: %s
+                            <br>
                             Produto: %s
                             <br>
                             Preço: %.2f
@@ -30,11 +33,32 @@ public class BranchController {
                             <br> 
                         </body>
                     </html>
-                    """, product.getName(), product.getPrice(), branch.getProducts().get(product));
+                    """, handleProductType(product),product.getName(), product.getPrice(), branch.getProducts().get(product));
             productsAsHTMLTemplate[index] = HTMLTemplate;
         }
 
         return productsAsHTMLTemplate;
+    }
+
+    public String handleProductType(Product product) {
+        if (product instanceof Medicament) {
+            return "Medicamento";
+        } else if (product instanceof Cosmetic) {
+            return "Cosmético";
+        }
+        return null;
+    }
+
+    public void addProduct(String branchUUID, String productName, Float productPrice, Integer productQuantity, String productType) {
+        Branch branch = getBranchByUUID(branchUUID);
+
+        if (productType.equals("Medicamento")) {
+            Product product = new Medicament(productName, productPrice,null,null,null);
+            branch.addProduct(product, productQuantity);
+        } else {
+            Product product = new Cosmetic(productName, productPrice,null,null,null);
+            branch.addProduct(product, productQuantity);
+        }
     }
 
     public Branch getBranchByUUID(String branchUUID) {
