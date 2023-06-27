@@ -37,12 +37,12 @@ public class Main {
         }
 
         branch1.login(password);
-        branch1.addProduct(dipirona);
-        branch1.addProduct(ipubrofeno);
+        branch1.addProduct(dipirona,1);
+        branch1.addProduct(ipubrofeno,1);
         branch1.logout();
 
         branch2.login(password);
-        branch2.addProduct(originalCare);
+        branch2.addProduct(originalCare,1);
         branch2.logout();
 
         new Home();
