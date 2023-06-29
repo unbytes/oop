@@ -49,16 +49,18 @@ public class BranchController {
         return null;
     }
 
-    public void addProduct(String branchUUID, String productName, Float productPrice, Integer productQuantity, String productType) {
+    public void addMedicament(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String boxColor, Integer dosageMg, Integer minimumAge) {
         Branch branch = getBranchByUUID(branchUUID);
 
-        if (productType.equals("Medicamento")) {
-            Product product = new Medicament(productName, productPrice,null,null,null);
-            branch.addProduct(product, productQuantity);
-        } else {
-            Product product = new Cosmetic(productName, productPrice,null,null,null);
-            branch.addProduct(product, productQuantity);
-        }
+        Product product = new Medicament(productName, productPrice, productQuantity, boxColor, dosageMg, minimumAge);
+        branch.addProduct(product, productQuantity);
+    }
+
+    public void addCosmetic(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String brand, String type, Boolean uv) {
+        Branch branch = getBranchByUUID(branchUUID);
+
+        Product product = new Cosmetic(productName, productPrice, productQuantity, brand, type, uv);
+        branch.addProduct(product, productQuantity);
     }
 
     public Branch getBranchByUUID(String branchUUID) {
