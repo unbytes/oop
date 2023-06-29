@@ -9,10 +9,12 @@ import models.Cosmetic;
 import models.Medicament;
 import views.components.Button;
 import views.components.Form;
+import views.components.IntegerField;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
 public class Product extends BasicFrame {
+    private JTextField searchField = new JTextField(20);
     private JPanel handleProductsPanel = new JPanel();
     private JScrollPane productListPanel = null;
     private JList<String> productList = null;
@@ -106,7 +108,6 @@ public class Product extends BasicFrame {
         JLabel searchLabel = new JLabel("Nome do produto: ");
         searchPanel.add(searchLabel);
 
-        JTextField searchField = new JTextField(20);
         searchField.addActionListener(createSearchAction(searchField));
         searchPanel.add(searchField);
 
@@ -122,37 +123,17 @@ public class Product extends BasicFrame {
         });
         buttonPanel.add(createProductButton, BorderLayout.SOUTH);
 
-        Button updateProductButton = new Button("Atualizar produto");
+        Button updateProductButton = new Button("Atualizar");
         updateProductButton.addActionListener(initUpdateFormEvent -> {
-            String selectedValue = productList.getSelectedValue();
-            if (selectedValue != null) {
-                String productName = selectedValue.split("<br>")[1].split(": ")[1].trim();
-                String productType = selectedValue.split("<br>")[0].split(": ")[1].trim();
-
-                Form updateForm;
-                if (productType.equals("Medicamento")) {
-                    updateForm = createMedicamentUpdateForm(productName);
-                } else {
-                    updateForm = createCosmeticUpdateForm(productName);
-                }
-                Button submitButton = updateForm.getSubmitButton();
-                submitButton.addActionListener(updateProductEvent -> {
-                    LinkedHashMap<String, String> productData = updateForm.retrieveFieldValues();
-                    branchController.updateProduct(branchUUID, productName, productType, productData);
-                    initProductList(searchField.getText());
-                });
-
-                if (currentUpdateForm != null) {
-                    handleProductsPanel.remove(currentUpdateForm);
-                }
-
-                handleProductsPanel.add(updateForm);
-                refreshProductList();
-
-                currentUpdateForm = updateForm;
-            }
+            handleUpdateProductForm();
         });
         buttonPanel.add(updateProductButton, BorderLayout.SOUTH);
+
+        Button deleteProductButton = new Button("Deletar");
+        deleteProductButton.addActionListener(e -> {
+            handleDeleteProductPopUpForm();
+        });
+        buttonPanel.add(deleteProductButton, BorderLayout.SOUTH);
 
         initProductList("");
         handleProductsPanel.setBackground(Color.WHITE);
@@ -162,6 +143,52 @@ public class Product extends BasicFrame {
 
         bodyPanel.add(productBodyPanel, BorderLayout.CENTER);
         this.add(bodyPanel, BorderLayout.CENTER);
+    }
+
+    public void handleDeleteProductPopUpForm() {
+        String selectedValue = productList.getSelectedValue();
+        if (selectedValue != null) {
+            IntegerField quantityField = new IntegerField();
+            int option = JOptionPane.showOptionDialog(null, quantityField, "Quantos serão removidos?",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+            if (option == JOptionPane.OK_OPTION) {
+                String productName = selectedValue.split("<br>")[1].split(": ")[1].trim();
+                Integer quantity = Integer.parseInt(quantityField.getText());
+                branchController.removeProduct(branchUUID, productName, quantity);
+                initProductList(searchField.getText());
+            }
+        }
+    }
+
+    public void handleUpdateProductForm() {
+        String selectedValue = productList.getSelectedValue();
+        if (selectedValue != null) {
+            String productName = selectedValue.split("<br>")[1].split(": ")[1].trim();
+            String productType = selectedValue.split("<br>")[0].split(": ")[1].trim();
+
+            Form updateForm;
+            if (productType.equals("Medicamento")) {
+                updateForm = createMedicamentUpdateForm(productName);
+            } else {
+                updateForm = createCosmeticUpdateForm(productName);
+            }
+            Button submitButton = updateForm.getSubmitButton();
+            submitButton.addActionListener(updateProductEvent -> {
+                LinkedHashMap<String, String> productData = updateForm.retrieveFieldValues();
+                branchController.updateProduct(branchUUID, productName, productType, productData);
+                initProductList(searchField.getText());
+            });
+
+            if (currentUpdateForm != null) {
+                handleProductsPanel.remove(currentUpdateForm);
+            }
+
+            handleProductsPanel.add(updateForm);
+            refreshProductList();
+
+            currentUpdateForm = updateForm;
+        }
     }
 
     public LinkedHashMap<String, Form.FieldTypes> createBasicProductFormComponents() {
