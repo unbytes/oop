@@ -19,7 +19,6 @@ public class ManageBranch extends BasicFrame {
         this.branchUUID = branchUUID;
 
         makeBody();
-        logoutBranchWhenWindowClose(branchUUID);
     }
 
     public void makeBody() {
