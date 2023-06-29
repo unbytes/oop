@@ -2,9 +2,9 @@ package models;
 
 public abstract class Product {
     protected String name;
-    protected Integer price;
+    protected Float price;
 
-    public Product(String name, Integer price) {
+    public Product(String name, Float price) {
         this.name = name;
         this.price = price;
     }
@@ -17,11 +17,11 @@ public abstract class Product {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public float getPrice() {
         return this.price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

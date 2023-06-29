@@ -54,7 +54,7 @@ public class CreateProduct extends BasicFrame {
 
     public void handleSignUp(LinkedHashMap<String, String> fields){
         String name = fields.get("Nome");
-        Float price = Float.parseFloat(fields.get("Preço"));
+        Integer price = Integer.parseInt(fields.get("Preço"));
         Integer quantity = Integer.parseInt(fields.get("Quantidade"));
         String productType = fields.get("Tipo");
 
