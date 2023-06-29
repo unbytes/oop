@@ -23,9 +23,9 @@ public class Main {
     static Client henrique = new Client("Henrique", "151.029.870-38", 20);
     static Client mateus = new Client("Mateus", "138.890.550-79", 18);
 
-    static Medicament dipirona = new Medicament("Dipirona", 21.35f, "", 500, 15);
-    static Medicament ipubrofeno = new Medicament("Ipubrofeno", 28.67f, "", 100, 12);
-    static Cosmetic originalCare = new Cosmetic("Hidratante Labial Original Care", 17.39f, "Nivea", "Lábios", false);
+    static Medicament dipirona = new Medicament("Dipirona" , 21, 1, "", 500, 15);
+    static Medicament ipubrofeno = new Medicament("Ipubrofeno", 28 , 2, "", 100, 12);
+    static Cosmetic originalCare = new Cosmetic("Hidratante Labial Original Care", 17 , 3, "Nivea", "Lábios", false);
 
     public static void main(String[] args) throws Exception {
         for (Branch branch : Arrays.asList(branch1, branch2)) {
