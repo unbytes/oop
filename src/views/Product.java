@@ -5,15 +5,12 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 import controllers.BranchController;
-import models.Cosmetic;
-import models.Medicament;
 import views.components.Button;
 import views.components.Form;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
 public class Product extends BasicFrame {
-    private JPanel handleProductsPanel = new JPanel();
     private JScrollPane productListPanel = null;
     private JList<String> productList = null;
     private Form currentUpdateForm;
@@ -26,57 +23,6 @@ public class Product extends BasicFrame {
         this.branchUUID = branchUUID;
 
         makeBody();
-    }
-
-    public void refreshProductList() {
-        handleProductsPanel.repaint();
-        handleProductsPanel.revalidate();
-    }
-
-    public void styleProductListPanel() {
-        refreshProductList();
-        productListPanel.setPreferredSize(new Dimension(500, 500));
-        productListPanel.setBorder(BorderFactory.createEmptyBorder());
-        productListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        productListPanel.setBackground(Color.WHITE);
-    }
-
-    public Action createSearchAction(JTextField searchField) {
-        Action searchAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String productSearchName = searchField.getText();
-                String searchedProducts[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID,
-                        productSearchName);
-
-                handleProductsPanel.removeAll();
-                if (searchedProducts == null) {
-                    handleProductsPanel.add(new JLabel("Nenhum produto encontrado"));
-                } else {
-                    productList = new JList<String>(searchedProducts);
-                    productListPanel = new JScrollPane(productList);
-                    handleProductsPanel.add(productListPanel);
-                }
-                styleProductListPanel();
-            }
-        };
-
-        return searchAction;
-    }
-
-    public void initProductList(String productName) {
-        String products[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID, productName);
-
-        handleProductsPanel.removeAll();
-        if (products == null) {
-            handleProductsPanel.add(new JLabel("Nenhum produto cadastrado"));
-        } else {
-            productList = new JList<String>(products);
-            productListPanel = new JScrollPane(productList);
-            handleProductsPanel.add(productListPanel);
-        }
-
-        styleProductListPanel();
     }
 
     public void makeBody() {
@@ -96,7 +42,7 @@ public class Product extends BasicFrame {
         bodyPanel.add(titleLabel, BorderLayout.NORTH);
 
         JPanel productBodyPanel = new JPanel();
-        productBodyPanel.setLayout(new BorderLayout());
+
         productBodyPanel.setBackground(Color.WHITE);
 
         JPanel searchPanel = new JPanel();
@@ -107,8 +53,14 @@ public class Product extends BasicFrame {
         searchPanel.add(searchLabel);
 
         JTextField searchField = new JTextField(20);
-        searchField.addActionListener(createSearchAction(searchField));
-        searchPanel.add(searchField);
+
+        String products[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID, "");
+        if (products == null) {
+            productListPanel.add(new JLabel("Nenhum produto cadastrado"));
+        } else {
+            productList = new JList<String>(products);
+            productListPanel = new JScrollPane(productList);
+        }
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -123,42 +75,57 @@ public class Product extends BasicFrame {
         buttonPanel.add(createProductButton, BorderLayout.SOUTH);
 
         Button updateProductButton = new Button("Atualizar produto");
-        updateProductButton.addActionListener(initUpdateFormEvent -> {
+        updateProductButton.addActionListener(e -> {
             String selectedValue = productList.getSelectedValue();
-            if (selectedValue != null) {
-                String productName = selectedValue.split("<br>")[1].split(": ")[1].trim();
-                String productType = selectedValue.split("<br>")[0].split(": ")[1].trim();
+            String productName = selectedValue.split("<br>")[1].split(": ")[1].trim();
+            String productType = selectedValue.split("<br>")[0].split(": ")[1].trim();
 
-                Form updateForm;
-                if (productType.equals("Medicamento")) {
-                    updateForm = createMedicamentUpdateForm(productName);
-                } else {
-                    updateForm = createCosmeticUpdateForm(productName);
-                }
-                Button submitButton = updateForm.getSubmitButton();
-                submitButton.addActionListener(updateProductEvent -> {
-                    LinkedHashMap<String, String> productData = updateForm.retrieveFieldValues();
-                    branchController.updateProduct(branchUUID, productName, productType, productData);
-                    initProductList(searchField.getText());
-                });
-
-                if (currentUpdateForm != null) {
-                    handleProductsPanel.remove(currentUpdateForm);
-                }
-
-                handleProductsPanel.add(updateForm);
-                refreshProductList();
-
-                currentUpdateForm = updateForm;
+            Form updateForm;
+            if (productType.equals("Medicamento")) {
+                updateForm = createMedicamentUpdateForm(productName);
+            } else {
+                updateForm = createCosmeticUpdateForm(productName);
             }
+
+            if (currentUpdateForm != null) {
+                productBodyPanel.remove(currentUpdateForm);
+            }
+
+            productBodyPanel.add(updateForm);
+            productBodyPanel.repaint();
+            productBodyPanel.revalidate();
+
+            currentUpdateForm = updateForm;
         });
         buttonPanel.add(updateProductButton, BorderLayout.SOUTH);
 
-        initProductList("");
-        handleProductsPanel.setBackground(Color.WHITE);
+        Action searchAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String productSearchName = searchField.getText();
+                String searchedProducts[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID,
+                        productSearchName);
 
-        productBodyPanel.add(searchPanel, BorderLayout.NORTH);
-        productBodyPanel.add(handleProductsPanel, BorderLayout.CENTER);
+                productListPanel.removeAll();
+                if (searchedProducts == null) {
+                    productListPanel.add(new JLabel("Nenhum produto encontrado"));
+                } else {
+                    JList<String> productList = new JList<String>(searchedProducts);
+                    productListPanel.add(productList);
+                }
+                productListPanel.repaint();
+                productListPanel.revalidate();
+            }
+        };
+        searchField.addActionListener(searchAction);
+        searchPanel.add(searchField);
+
+        productListPanel.setPreferredSize(new Dimension(360, 300));
+        productListPanel.setBorder(BorderFactory.createEmptyBorder());
+        productListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        productListPanel.setBackground(Color.WHITE);
+
+        productBodyPanel.add(productListPanel);
 
         bodyPanel.add(productBodyPanel, BorderLayout.CENTER);
         this.add(bodyPanel, BorderLayout.CENTER);
@@ -181,20 +148,7 @@ public class Product extends BasicFrame {
         components.put("Dosagem (mg)", Form.FieldTypes.INTEGER);
         components.put("Idade Mínima", Form.FieldTypes.INTEGER);
 
-        Medicament product = (Medicament) branchController.getProductByName(branchUUID, productName);
-        ArrayList<String> fieldValues = new ArrayList<String>() {
-            {
-                add(productName);
-                add(product.getPrice().toString());
-                add(branchController.getProductQuantity(branchUUID, product).toString());
-                add(product.getBoxColor());
-                add(product.getDosageMl().toString());
-                add(product.getMinimumAge().toString());
-            }
-        };
-
-        Form updateProductForm = new Form("Atualizar", "", components);
-        updateProductForm.setFieldDefaultValuesInOder(fieldValues);
+        Form updateProductForm = new Form("Atualizar", productName, components);
         return updateProductForm;
     }
 
@@ -202,22 +156,9 @@ public class Product extends BasicFrame {
         LinkedHashMap<String, Form.FieldTypes> components = createBasicProductFormComponents();
         components.put("Marca", Form.FieldTypes.TEXT);
         components.put("Tipo", Form.FieldTypes.TEXT);
-        components.put("UV", Form.FieldTypes.CHECKBOX);
+        components.put("UV", Form.FieldTypes.TEXT);
 
-        Cosmetic product = (Cosmetic) branchController.getProductByName(branchUUID, productName);
-        ArrayList<String> fieldValues = new ArrayList<String>() {
-            {
-                add(productName);
-                add(product.getPrice().toString());
-                add(branchController.getProductQuantity(branchUUID, product).toString());
-                add(product.getBrand());
-                add(product.getType());
-                add(product.getContainsSunProtectionFactor().toString());
-            }
-        };
-
-        Form updateProductForm = new Form("Atualizar", "", components);
-        updateProductForm.setFieldDefaultValuesInOder(fieldValues);
+        Form updateProductForm = new Form("Atualizar", productName, components);
         return updateProductForm;
     }
 }
