@@ -121,8 +121,8 @@ public class CreateProduct extends BasicFrame {
         if (name.equals("") || price.equals("") || quantity.equals("") || productType.equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else {
-            Integer priceint = Integer.parseInt(price);
-            Integer quantityint = Integer.parseInt(quantity);
+            Integer priceInt = Integer.parseInt(price);
+            Integer quantityInt = Integer.parseInt(quantity);
             if (productType == "Medicamento") {
                 LinkedHashMap<String, String> generalFields = generalProductForm.retrieveFieldValues();
                 String boxColor = generalFields.get("Cor da Caixa");
@@ -131,9 +131,9 @@ public class CreateProduct extends BasicFrame {
                 if ( boxColor.equals("") || dosage.equals("") || minimumAge.equals("")) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
                 }else{
-                    Integer dosageint = Integer.parseInt(dosage);
-                    Integer minimumAgeint = Integer.parseInt(minimumAge);
-                    BranchController.addMedicament(branchUUID, name, priceint, quantityint, boxColor, dosageint, minimumAgeint);
+                    Integer dosageInt = Integer.parseInt(dosage);
+                    Integer minimumAgeInt = Integer.parseInt(minimumAge);
+                    BranchController.addMedicament(branchUUID, name, priceInt, quantityInt, boxColor, dosageInt, minimumAgeInt);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();
                     new Product(branchUUID);
@@ -146,7 +146,7 @@ public class CreateProduct extends BasicFrame {
                 if ( brand.equals("") || type.equals("")) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
                 }else{
-                    BranchController.addCosmetic(branchUUID, name, priceint, quantityint, brand, type, uv);
+                    BranchController.addCosmetic(branchUUID, name, priceInt, quantityInt, brand, type, uv);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();
                     new Product(branchUUID);

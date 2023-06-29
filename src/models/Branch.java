@@ -51,25 +51,32 @@ public class Branch {
         return null;
     }
 
-    public void addProduct(Product product, Integer productsquantity){
-        this.products.put(product, productsquantity);
+    public void addProduct(Product product, Integer productsQuantity) {
+        this.products.put(product, productsQuantity);
     }
-    
 
-    public void removeProduct(Product product, Integer quantity) throws Exception {
+    public boolean removeProduct(Product product) {
+        if (this.isAuthenticated) {
+            if (this.products.containsKey(product)) {
+                this.products.remove(product);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeProduct(Product product, Integer quantity) {
         if (this.isAuthenticated) {
             if (this.products.containsKey(product)) {
                 if (this.products.get(product) > quantity) {
                     this.products.put(product, this.products.get(product) - quantity);
                 } else {
                     this.products.remove(product);
-                } 
-            } else {
-                throw new Exception("Product not found in " + this.id + " branch");
-            }  
-        } else {
-            throw new Exception("You are not authenticated");
-        }        
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public void buyProduct(Client client, Product product) throws Exception {

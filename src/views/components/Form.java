@@ -15,18 +15,45 @@ public class Form extends JPanel {
     }
 
     public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components) {
+        initForm(buttonText, title, components);
+    }
+
+    public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components, HashMap<String, String[]> comboBoxOptions) {
+        this.comboBoxOptions = comboBoxOptions;
+        initForm(buttonText, title, components);
+    }
+
+    public void initForm(String buttonText, String title, LinkedHashMap<String, FieldTypes> components) {
         submitButton = new Button(buttonText);
         setUp(title);
         addComponents(components);
         addSubmitButton();
     }
 
-    public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components, HashMap<String, String[]> comboBoxOptions) {
-        submitButton = new Button(buttonText);
-        this.comboBoxOptions = comboBoxOptions;
-        setUp(title);
-        addComponents(components);
-        addSubmitButton();
+    public void setFieldDefaultValuesInOder(ArrayList<String> fieldValues) {
+        ArrayList<JComponent> fieldComponents = new ArrayList<JComponent>(fields.values());
+        for (int index = 0; index < fieldValues.size(); index++) {
+            JComponent component = fieldComponents.get(index);
+            if (component instanceof JTextField) {
+                JTextField textField = (JTextField) component;
+                textField.setText(fieldValues.get(index));
+            } else if (component instanceof JPasswordField) {
+                JPasswordField passwordField = (JPasswordField) component;
+                passwordField.setText(fieldValues.get(index));
+            } else if (component instanceof IntegerField) {
+                IntegerField integerField = (IntegerField) component;
+                integerField.setText(fieldValues.get(index));
+            } else if (component instanceof JComboBox) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) component;
+                comboBox.setSelectedItem(fieldValues.get(index));
+            } else if (component instanceof JCheckBox) {
+                JCheckBox checkBox = (JCheckBox) component;
+                checkBox.setSelected(Boolean.parseBoolean(fieldValues.get(index)));
+            } else {
+                throw new Error("Invalid field type");
+            }
+        }
     }
 
     public void setUp(String title) {
@@ -43,6 +70,7 @@ public class Form extends JPanel {
 
     public void setUpComponent(String name, JComponent component) {
         component.setPreferredSize(new Dimension(200, 30));
+        component.setBackground(Color.WHITE);
         component.setName(name);
         fields.put(name, component);
         this.add(component, gbc);
@@ -70,7 +98,7 @@ public class Form extends JPanel {
             } else if (type == FieldTypes.CHECKBOX) {
                 setUpComponent(key, new JCheckBox());
             } else {
-                throw new Error("Invalid component type");
+                throw new Error("Invalid field type");
             }
         }
     }
@@ -103,7 +131,7 @@ public class Form extends JPanel {
                 @SuppressWarnings("unchecked")
                 JComboBox<String> comboBox = (JComboBox<String>) component;
                 fieldValues.put(comboBox.getName(), (String) comboBox.getSelectedItem());
-            } else if(component instanceof JCheckBox) {
+            } else if (component instanceof JCheckBox) {
                 JCheckBox checkBox = (JCheckBox) component;
                 fieldValues.put(checkBox.getName(), String.valueOf(checkBox.isSelected()));
             } else {

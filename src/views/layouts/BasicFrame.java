@@ -14,7 +14,7 @@ public abstract class BasicFrame extends JFrame {
 
     public BasicFrame() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setMinimumSize(new Dimension(854, 480));
+        this.setMinimumSize(new Dimension(1600, 900));
 
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());

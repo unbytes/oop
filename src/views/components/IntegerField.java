@@ -9,6 +9,7 @@ public class IntegerField extends JFormattedTextField {
     public IntegerField() {
         super(createFormatter());
         handleLastDigitRemove();
+        this.setText("0");
     }
 
     protected static NumberFormatter createFormatter() {

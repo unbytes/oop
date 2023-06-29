@@ -9,7 +9,65 @@ import models.Product;
 import models.Store;
 
 public class BranchController {
-    
+
+    public String generateMedicamentHTMLTemplate(Product product, Branch branch) {
+        String HTMLTemplate = String.format("""
+                <html>
+                    <body>
+                        Tipo de Produto: %s
+                        <br>
+                        Produto: %s
+                        <br>
+                        Preço: %d
+                        <br>
+                        Quantidade: %d
+                        <br>
+                        Cor da Caixa: %s
+                        <br>
+                        Dosagem (mg): %d
+                        <br>
+                        Idade Mínima: %d
+                        <br> 
+                    </body>
+                </html>
+                """, handleProductType(product),
+                product.getName(), product.getPrice(),
+                branch.getProducts().get(product),
+                ((Medicament) product).getBoxColor(),
+                ((Medicament) product).getDosageMg(),
+                ((Medicament) product).getMinimumAge());
+        return HTMLTemplate;
+    }
+
+    public String generateCosmeticHTMLTemplate(Product product, Branch branch) {
+        String HTMLTemplate = String.format("""
+                <html>
+                    <body>
+                        Tipo de Produto: %s
+                        <br>
+                        Produto: %s
+                        <br>
+                        Preço: %d
+                        <br>
+                        Quantidade: %d
+                        <br>
+                        Marca: %s
+                        <br>
+                        Tipo: %s
+                        <br>
+                        Proteção Solar: %s
+                        <br> 
+                    </body>
+                </html>
+                """, handleProductType(product),
+                product.getName(), product.getPrice(),
+                branch.getProducts().get(product),
+                ((Cosmetic) product).getBrand(),
+                ((Cosmetic) product).getType(),
+                ((Cosmetic) product).getContainsSunProtectionFactor() ? "Sim" : "Não");
+        return HTMLTemplate;
+    }
+
     public String[] searchProductsByWordAsHTMLTemplate(String branchUUID, String word) {
         Branch branch = getBranchByUUID(branchUUID);
         ArrayList<Product> searchedProducts = branch.searchProductsByWord(word);
@@ -19,21 +77,13 @@ public class BranchController {
         Integer numberOfProducts = searchedProducts.size();
         String productsAsHTMLTemplate[] = new String[numberOfProducts];
         for (Integer index = 0; index < numberOfProducts; index++) {
+            String HTMLTemplate;
             Product product = searchedProducts.get(index);
-            String HTMLTemplate = String.format("""
-                    <html>
-                        <body>
-                            Tipo de Produto: %s
-                            <br>
-                            Produto: %s
-                            <br>
-                            Preço: %.2f
-                            <br>
-                            Quantidade: %d
-                            <br> 
-                        </body>
-                    </html>
-                    """, handleProductType(product),product.getName(), product.getPrice(), branch.getProducts().get(product));
+            if (handleProductType(product) == "Medicamento") {
+                HTMLTemplate = generateMedicamentHTMLTemplate(product, branch);
+            } else {
+                HTMLTemplate = generateCosmeticHTMLTemplate(product, branch);
+            }
             productsAsHTMLTemplate[index] = HTMLTemplate;
         }
 
@@ -52,15 +102,26 @@ public class BranchController {
     public void addMedicament(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String boxColor, Integer dosageMg, Integer minimumAge) {
         Branch branch = getBranchByUUID(branchUUID);
 
-        Product product = new Medicament(productName, productPrice, productQuantity, boxColor, dosageMg, minimumAge);
+        Product product = new Medicament(productName, productPrice, boxColor, dosageMg, minimumAge);
         branch.addProduct(product, productQuantity);
     }
 
     public void addCosmetic(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String brand, String type, Boolean uv) {
         Branch branch = getBranchByUUID(branchUUID);
 
-        Product product = new Cosmetic(productName, productPrice, productQuantity, brand, type, uv);
+        Product product = new Cosmetic(productName, productPrice, brand, type, uv);
         branch.addProduct(product, productQuantity);
+    }
+
+    public Product getProductByName(String branchUUID, String productName) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = branch.searchProductByName(productName);
+        return product;
+    }
+
+    public Integer getProductQuantity(String branchUUID, Product product) {
+        Branch branch = getBranchByUUID(branchUUID);
+        return branch.getProducts().get(product);
     }
 
     public Branch getBranchByUUID(String branchUUID) {
@@ -107,5 +168,41 @@ public class BranchController {
     public String getBranchRegion(String branchUUID) {
         Branch branch = getBranchByUUID(branchUUID);
         return branch.getAddress().getRegion();
+    }
+
+    public void updateProduct(String branchUUID, String productName, String productType,
+            LinkedHashMap<String, String> productData) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+
+        String newProductName = productData.get("Nome");
+        Integer price = Integer.parseInt(productData.get("Preço"));
+        Integer quantity = Integer.parseInt(productData.get("Quantidade"));
+        if (productType.equals("Medicamento")) {
+            String boxColor = productData.get("Cor da Caixa");
+            Integer dosageMl = Integer.parseInt(productData.get("Dosagem (mg)"));
+            Integer minimumAge = Integer.parseInt(productData.get("Idade Mínima"));
+            Medicament medicament = new Medicament(newProductName, price, boxColor, dosageMl, minimumAge);
+            branch.addProduct(medicament, quantity);
+        } else {
+            String brand = productData.get("Marca");
+            String type = productData.get("Tipo");
+            Boolean UV = Boolean.parseBoolean(productData.get("UV"));
+            Cosmetic cosmetic = new Cosmetic(newProductName, price, brand, type, UV);
+            branch.addProduct(cosmetic, quantity);
+        }
+        branch.removeProduct(product);
+    }
+
+    public void removeProduct(String branchUUID, String productName) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+        branch.removeProduct(product);
+    }
+
+    public void removeProduct(String branchUUID, String productName, Integer quantity) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+        branch.removeProduct(product, quantity);
     }
 }

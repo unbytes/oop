@@ -5,8 +5,8 @@ public class Cosmetic extends Product {
     private String type;
     private Boolean containsSunProtectionFactor;
 
-    public Cosmetic(String name, Integer price, Integer quantity, String brand, String type, Boolean containsSunProtectionFactor) {
-        super(name, price, quantity);
+    public Cosmetic(String name, Integer price, String brand, String type, Boolean containsSunProtectionFactor) {
+        super(name, price);
         this.brand = brand;
         this.type = type;
         this.containsSunProtectionFactor = containsSunProtectionFactor;

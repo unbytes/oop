@@ -5,8 +5,8 @@ public class Medicament extends Product {
     private Integer dosageMg;
     private Integer minimumAge;
 
-    public Medicament(String name, Integer price, Integer quantity, String boxColor, Integer dosageMg, Integer minimumAge) {
-        super(name, price, quantity);
+    public Medicament(String name, Integer price, String boxColor, Integer dosageMg, Integer minimumAge) {
+        super(name, price);
         this.boxColor = boxColor;
         this.dosageMg = dosageMg;
         this.minimumAge = minimumAge;
