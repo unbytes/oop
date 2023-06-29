@@ -11,7 +11,7 @@ public class Form extends JPanel {
     private HashMap<String, String[]> comboBoxOptions = new HashMap<String, String[]>();
 
     public enum FieldTypes {
-        TEXT, PASSWORD, INTEGER, COMBOBOX
+        TEXT, PASSWORD, INTEGER, COMBOBOX, CHECKBOX
     }
 
     public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components) {
@@ -67,10 +67,23 @@ public class Form extends JPanel {
                 setUpComponent(key, new IntegerField());
             } else if (type == FieldTypes.COMBOBOX){
                 setUpComponent(key, new JComboBox<String>(comboBoxOptions.get(key)));
+            } else if (type == FieldTypes.CHECKBOX) {
+                setUpComponent(key, new JCheckBox());
             } else {
                 throw new Error("Invalid component type");
             }
         }
+    }
+    
+    public void removeFields() {
+        for (JComponent component : getFields().values()) {
+            this.remove(component);
+        }
+    }
+
+    public void updateFields(LinkedHashMap<String, FieldTypes> components) {
+        removeFields();
+        addComponents(components);
     }
 
     public void addSubmitButton() {
@@ -90,6 +103,9 @@ public class Form extends JPanel {
                 @SuppressWarnings("unchecked")
                 JComboBox<String> comboBox = (JComboBox<String>) component;
                 fieldValues.put(comboBox.getName(), (String) comboBox.getSelectedItem());
+            } else if(component instanceof JCheckBox) {
+                JCheckBox checkBox = (JCheckBox) component;
+                fieldValues.put(checkBox.getName(), String.valueOf(checkBox.isSelected()));
             } else {
                 JTextField textField = (JTextField) component;
                 fieldValues.put(textField.getName(), textField.getText());
@@ -104,5 +120,13 @@ public class Form extends JPanel {
 
     public Button getSubmitButton() {
         return this.submitButton;
+    }
+
+    public void removeSubmitButton() {
+        this.remove(submitButton);
+    }
+
+    public JComponent getFlag(String string) {
+        return null;
     }
 }
