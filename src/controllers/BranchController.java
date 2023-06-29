@@ -192,4 +192,16 @@ public class BranchController {
         }
         branch.removeProduct(product);
     }
+
+    public void removeProduct(String branchUUID, String productName) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+        branch.removeProduct(product);
+    }
+
+    public void removeProduct(String branchUUID, String productName, Integer quantity) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+        branch.removeProduct(product, quantity);
+    }
 }
