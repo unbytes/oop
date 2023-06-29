@@ -34,7 +34,7 @@ public class BranchController {
                 product.getName(), product.getPrice(),
                 branch.getProducts().get(product),
                 ((Medicament) product).getBoxColor(),
-                ((Medicament) product).getDosageMl(),
+                ((Medicament) product).getDosageMg(),
                 ((Medicament) product).getMinimumAge());
         return HTMLTemplate;
     }
@@ -99,17 +99,18 @@ public class BranchController {
         return null;
     }
 
-    public void addProduct(String branchUUID, String productName, Integer productPrice, Integer productQuantity,
-            String productType) {
+    public void addMedicament(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String boxColor, Integer dosageMg, Integer minimumAge) {
         Branch branch = getBranchByUUID(branchUUID);
 
-        if (productType.equals("Medicamento")) {
-            Product product = new Medicament(productName, productPrice, null, null, null);
-            branch.addProduct(product, productQuantity);
-        } else {
-            Product product = new Cosmetic(productName, productPrice, null, null, null);
-            branch.addProduct(product, productQuantity);
-        }
+        Product product = new Medicament(productName, productPrice, boxColor, dosageMg, minimumAge);
+        branch.addProduct(product, productQuantity);
+    }
+
+    public void addCosmetic(String branchUUID, String productName, Integer productPrice, Integer productQuantity, String brand, String type, Boolean uv) {
+        Branch branch = getBranchByUUID(branchUUID);
+
+        Product product = new Cosmetic(productName, productPrice, brand, type, uv);
+        branch.addProduct(product, productQuantity);
     }
 
     public Product getProductByName(String branchUUID, String productName) {

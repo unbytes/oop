@@ -102,6 +102,17 @@ public class Form extends JPanel {
             }
         }
     }
+    
+    public void removeFields() {
+        for (JComponent component : getFields().values()) {
+            this.remove(component);
+        }
+    }
+
+    public void updateFields(LinkedHashMap<String, FieldTypes> components) {
+        removeFields();
+        addComponents(components);
+    }
 
     public void addSubmitButton() {
         gbc.gridx = 0;
@@ -137,5 +148,13 @@ public class Form extends JPanel {
 
     public Button getSubmitButton() {
         return this.submitButton;
+    }
+
+    public void removeSubmitButton() {
+        this.remove(submitButton);
+    }
+
+    public JComponent getFlag(String string) {
+        return null;
     }
 }

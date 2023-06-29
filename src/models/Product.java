@@ -27,6 +27,9 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return String.format("Product: %s; Price: %.2f", this.name, this.price);
+        return String.format("""
+                Nome: %s
+                Preço: %d
+                """, this.name, this.price);
     }
 }

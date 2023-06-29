@@ -11,7 +11,7 @@ import views.layouts.BasicFrame;
 
 public class CreateClient extends BasicFrame {
     private StoreController storeController = new StoreController();
-    
+
     public CreateClient() {
         super();
         makeBody();
@@ -45,13 +45,14 @@ public class CreateClient extends BasicFrame {
 
     public void handleSignUp(LinkedHashMap<String, String> fields) {
         String name = fields.get("Name");
-        Integer age = Integer.parseInt(fields.get("Age"));
+        String age = fields.get("Age");
         String CPF = fields.get("CPF");
 
         if (name.equals("") || age.equals("") || CPF.equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else {
-            storeController.createClient(name, age, CPF);
+            Integer ageInt = Integer.parseInt(age);
+            storeController.createClient(name, ageInt, CPF);
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
             this.dispose();
             new Client();

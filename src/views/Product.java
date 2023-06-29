@@ -215,7 +215,7 @@ public class Product extends BasicFrame {
                 add(product.getPrice().toString());
                 add(branchController.getProductQuantity(branchUUID, product).toString());
                 add(product.getBoxColor());
-                add(product.getDosageMl().toString());
+                add(product.getDosageMg().toString());
                 add(product.getMinimumAge().toString());
             }
         };
