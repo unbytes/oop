@@ -2,13 +2,13 @@ package models;
 
 public class Medicament extends Product {
     private String boxColor;
-    private Integer dosageMl;
+    private Integer dosageMg;
     private Integer minimumAge;
 
-    public Medicament(String name, float price, String boxColor, Integer dosageMl, Integer minimumAge) {
-        super(name, price);
+    public Medicament(String name, Integer price, Integer quantity, String boxColor, Integer dosageMg, Integer minimumAge) {
+        super(name, price, quantity);
         this.boxColor = boxColor;
-        this.dosageMl = dosageMl;
+        this.dosageMg = dosageMg;
         this.minimumAge = minimumAge;
     }
 
@@ -20,12 +20,12 @@ public class Medicament extends Product {
         this.boxColor = boxColor;
     }
 
-    public Integer getDosageMl() {
-        return this.dosageMl;
+    public Integer getDosageMg() {
+        return this.dosageMg;
     }
 
-    public void setDosageMl(Integer dosageMl) {
-        this.dosageMl = dosageMl;
+    public void setDosageMg(Integer dosageMg) {
+        this.dosageMg = dosageMg;
     }
 
     public Integer getMinimumAge() {
