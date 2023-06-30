@@ -60,9 +60,12 @@ public class StoreController {
                             CPF: %s
                             <br>
                             Nome: %s
+                            <br>
+                            Idade: %d
+                            <br> 
                         </body>
                     </html>
-                    """, client.getCPF(), client.getName());
+                    """, client.getCPF(), client.getName(), client.getAge());
             clientsAsHTMLTemplate[index] = HTMLTemplate;
         }
 
@@ -155,8 +158,19 @@ public class StoreController {
      * @param CPF
      * @return <code>String</code> Nome do cliente encontrado
      */
-    public String getClientName(String CPF) {
-        Client client = getClientByCPF(CPF);
+    public String getClientName(String clientCPF) {
+        Client client = getClientByCPF(clientCPF);
         return client.getName();
+    }
+
+    public void updateClient(String clientCPF, LinkedHashMap<String, String> clientData) {
+        Client client = getClientByCPF(clientCPF);
+
+        String clientName = clientData.get("Nome");
+        String cpf = clientData.get("CPF");
+        Integer age = Integer.parseInt(clientData.get("Idade"));
+
+        Store.registerClient(new Client(clientName, cpf, age));
+        Store.removeClient(client);
     }
 }

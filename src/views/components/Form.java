@@ -18,7 +18,8 @@ public class Form extends JPanel {
         initForm(buttonText, title, components);
     }
 
-    public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components, HashMap<String, String[]> comboBoxOptions) {
+    public Form(String buttonText, String title, LinkedHashMap<String, FieldTypes> components,
+            HashMap<String, String[]> comboBoxOptions) {
         this.comboBoxOptions = comboBoxOptions;
         initForm(buttonText, title, components);
     }
@@ -93,7 +94,7 @@ public class Form extends JPanel {
                 setUpComponent(key, new JPasswordField());
             } else if (type == FieldTypes.INTEGER) {
                 setUpComponent(key, new IntegerField());
-            } else if (type == FieldTypes.COMBOBOX){
+            } else if (type == FieldTypes.COMBOBOX) {
                 setUpComponent(key, new JComboBox<String>(comboBoxOptions.get(key)));
             } else if (type == FieldTypes.CHECKBOX) {
                 setUpComponent(key, new JCheckBox());
@@ -102,7 +103,7 @@ public class Form extends JPanel {
             }
         }
     }
-    
+
     public void removeFields() {
         for (JComponent component : getFields().values()) {
             this.remove(component);
@@ -127,7 +128,7 @@ public class Form extends JPanel {
             if (component instanceof JPasswordField) {
                 JPasswordField passwordField = (JPasswordField) component;
                 fieldValues.put(passwordField.getName(), String.valueOf(passwordField.getPassword()));
-            } else if(component instanceof JComboBox) {
+            } else if (component instanceof JComboBox) {
                 @SuppressWarnings("unchecked")
                 JComboBox<String> comboBox = (JComboBox<String>) component;
                 fieldValues.put(comboBox.getName(), (String) comboBox.getSelectedItem());
@@ -152,9 +153,5 @@ public class Form extends JPanel {
 
     public void removeSubmitButton() {
         this.remove(submitButton);
-    }
-
-    public JComponent getFlag(String string) {
-        return null;
     }
 }

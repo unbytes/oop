@@ -8,6 +8,7 @@ import controllers.BranchController;
 import models.Client;
 import models.Product;
 import views.components.Title;
+import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class PurchasedProducts extends BasicFrame {
