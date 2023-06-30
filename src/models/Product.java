@@ -1,9 +1,22 @@
 package models;
 
+/**
+ * Representa um produto, de forma abstrata, na da rede de farmácia
+ * 
+ * @autor Mateus, Henrique e Gabriel
+ * @version 1.1
+ * @since 2023
+ */
 public abstract class Product {
     protected String name;
     protected Integer price;
 
+    /**
+     * Cria um objeto do tipo <code>Product</code>
+     * 
+     * @param name
+     * @param price
+     */
     public Product(String name, Integer price) {
         this.name = name;
         this.price = price;

@@ -1,10 +1,26 @@
 package models;
 
+/**
+ * Representa um produto do tipo cosmético da rede de farmácia
+ * 
+ * @autor Mateus, Henrique e Gabriel
+ * @version 1.1
+ * @since 2023
+ */
 public class Cosmetic extends Product {
     private String brand;
     private String type;
     private Boolean containsSunProtectionFactor;
 
+    /**
+     * Cria um objeto do tipo <code>Cosmetic</code>
+     * 
+     * @param name
+     * @param price
+     * @param brand
+     * @param type
+     * @param containsSunProtectionFactor
+     */
     public Cosmetic(String name, Integer price, String brand, String type, Boolean containsSunProtectionFactor) {
         super(name, price);
         this.brand = brand;
