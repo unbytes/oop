@@ -136,7 +136,7 @@ public class CreateProduct extends BasicFrame {
                     BranchController.addMedicament(branchUUID, name, priceInt, quantityInt, boxColor, dosageInt, minimumAgeInt);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();
-                    new Product(branchUUID);
+                    new ProductView(branchUUID);
                 }
             } else {
                 LinkedHashMap<String, String> generalFields = generalProductForm.retrieveFieldValues();
@@ -149,7 +149,7 @@ public class CreateProduct extends BasicFrame {
                     BranchController.addCosmetic(branchUUID, name, priceInt, quantityInt, brand, type, uv);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();
-                    new Product(branchUUID);
+                    new ProductView(branchUUID);
                 }
             }
         }

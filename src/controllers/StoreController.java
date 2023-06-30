@@ -58,9 +58,36 @@ public class StoreController {
             return false;
     }
 
+    public String[] searchBranchesByCity(String city) {
+        ArrayList<Branch> branchesByCity = Store.searchBranchesFromCity(city);
+
+        Integer numberOfBranches = branchesByCity.size();
+        String branchesAsHTMLTemplate[] = new String[numberOfBranches];
+        for (Integer index = 0; index < numberOfBranches; index++) {
+            Branch branch = branchesByCity.get(index);
+            String HTMLTemplate = String.format("""
+                    <html>
+                        <body>
+                            UUID: %s
+                            <br>
+                            Endereço: %s
+                        </body>
+                    </html>
+                    """, branch.getId(), branch.getAddress().toString());
+            branchesAsHTMLTemplate[index] = HTMLTemplate;
+        }
+
+        return branchesAsHTMLTemplate;
+    }
+
     public void removeBranch(String branchUUID) {
         Branch branch = Store.getBranches().stream().filter(b -> b.getId().equals(branchUUID)).findFirst().orElse(null);
         Store.removeBranch(branch);
+    }
+
+    public Client getClientByCPF(String clientCPF) {
+        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(clientCPF)).findFirst().orElse(null);
+        return client;
     }
 
     public void removeClient(String clientUUID) {
@@ -74,7 +101,7 @@ public class StoreController {
     }
 
     public String getClientName(String clientCPF) {
-        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(clientCPF)).findFirst().orElse(null);
+        Client client = getClientByCPF(clientCPF);
         return client.getName();
     }
 }

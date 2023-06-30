@@ -3,16 +3,21 @@ package views;
 import java.awt.*;
 import javax.swing.*;
 import controllers.StoreController;
+import models.Client;
 import views.components.Title;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
-public class Client extends BasicFrame {
+public class ClientView extends BasicFrame {
     private StoreController storeController = new StoreController();
     private JList<String> clientList;
+    private String branchUUID;
 
-    public Client() {
+    public ClientView(String branchUUID) {
         super();
+
+        this.branchUUID = branchUUID;
+
         makeBody();
     }
 
@@ -39,7 +44,7 @@ public class Client extends BasicFrame {
         Button registerButton = new Button("Cadastrar");
         registerButton.addActionListener(e -> {
             this.dispose();
-            new CreateClient();
+            new CreateClient(branchUUID);
         });
         buttonPanel.add(registerButton);
 
@@ -48,6 +53,9 @@ public class Client extends BasicFrame {
             String selectedValue = clientList.getSelectedValue();
             String clientCPF = selectedValue.split("<br>")[0].split(": ")[1].trim();
             handleClientPopUpLogin(clientCPF);
+            Client client =  storeController.getClientByCPF(clientCPF) ;
+            this.dispose(); 
+            new PurchasedProducts(branchUUID,  client);
         });
         buttonPanel.add(loginButton);
 

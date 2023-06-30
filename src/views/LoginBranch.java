@@ -2,6 +2,7 @@ package views;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 import controllers.BranchController;
 import controllers.StoreController;
 import views.components.Title;
@@ -9,6 +10,7 @@ import views.components.Button;
 import views.layouts.BasicFrame;
 
 public class LoginBranch extends BasicFrame {
+    private JTextField searchField = new JTextField(20);
     private StoreController storeController = new StoreController();
     private BranchController branchController = new BranchController();
     private JList<String> branchList;
@@ -27,8 +29,23 @@ public class LoginBranch extends BasicFrame {
     }
 
     public void makeBranchList() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new GridLayout(2, 1));
+        bodyPanel.add(headerPanel, BorderLayout.NORTH);
+
         Title titleLabel = new Title("Filiais");
-        bodyPanel.add(titleLabel, BorderLayout.NORTH);
+        headerPanel.add(titleLabel);
+
+        JPanel searchPanel = new JPanel();
+        searchPanel.setBackground(Color.WHITE);
+        searchPanel.setLayout(new FlowLayout());
+
+        JLabel searchLabel = new JLabel("Cidade da filial: ");
+        searchPanel.add(searchLabel);
+
+        searchField.addActionListener(createSearchAction(searchField));
+        searchPanel.add(searchField);
+        headerPanel.add(searchPanel);
         
         branchList = new JList<String>(storeController.getBranchesAsHTMLTemplate());
         bodyPanel.add(branchList, BorderLayout.CENTER);
@@ -60,6 +77,19 @@ public class LoginBranch extends BasicFrame {
             handleBranchPopUpDelete(branchUUID);
         });
         buttonPanel.add(deleteButton);
+    }
+
+    public Action createSearchAction(JTextField searchField) {
+        Action searchAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchValue = searchField.getText();
+                String[] branches = storeController.searchBranchesByCity(searchValue);
+                branchList.setListData(branches);
+            }
+        };
+
+        return searchAction;
     }
 
     public void handleBranchPopUpLogin(String branchUUID) {

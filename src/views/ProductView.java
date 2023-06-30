@@ -13,7 +13,7 @@ import views.components.IntegerField;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
-public class Product extends BasicFrame {
+public class ProductView extends BasicFrame {
     private JTextField searchField = new JTextField(20);
     private JPanel handleProductsPanel = new JPanel();
     private JScrollPane productListPanel = null;
@@ -22,7 +22,7 @@ public class Product extends BasicFrame {
     private BranchController branchController = new BranchController();
     private String branchUUID;
 
-    public Product(String branchUUID) {
+    public ProductView(String branchUUID) {
         super();
 
         this.branchUUID = branchUUID;
@@ -31,16 +31,20 @@ public class Product extends BasicFrame {
     }
 
     public void refreshProductList() {
-        handleProductsPanel.repaint();
-        handleProductsPanel.revalidate();
+        if (handleProductsPanel != null) {
+            handleProductsPanel.revalidate();
+            handleProductsPanel.repaint();
+        }
     }
 
     public void styleProductListPanel() {
         refreshProductList();
-        productListPanel.setPreferredSize(new Dimension(500, 500));
-        productListPanel.setBorder(BorderFactory.createEmptyBorder());
-        productListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        productListPanel.setBackground(Color.WHITE);
+        if (productListPanel != null) {
+            productListPanel.setPreferredSize(new Dimension(500, 500));
+            productListPanel.setBorder(BorderFactory.createEmptyBorder());
+            productListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            productListPanel.setBackground(Color.WHITE);
+        }
     }
 
     public Action createSearchAction(JTextField searchField) {
