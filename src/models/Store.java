@@ -2,16 +2,33 @@ package models;
 
 import java.util.ArrayList;
 
+/**
+ * Representa a base de dados da rede de farmácia "Drogas Lícitas"
+ * 
+ * @autor Mateus, Henrique e Gabriel
+ * @version 1.1
+ * @since 2023
+ */
 public abstract class Store {
     private static final String name = "Drogas Licitas";
     private static final String password = "drogaslicitas";
     private static ArrayList<Branch> branches = new ArrayList<Branch>();
     private static ArrayList<Client> clients = new ArrayList<Client>();
 
+    /**
+     * Registar uma nova filial na base de dados
+     * 
+     * @param branch
+     */
     public static void registerBranch(Branch branch) {
         branches.add(branch);
     }
 
+    /**
+     * Remove uma filial da base de dados
+     *  
+     * @param branch
+     */
     public static void removeBranch(Branch branch) {
         branches.remove(branch);
     }
@@ -20,6 +37,12 @@ public abstract class Store {
         return branches;
     }
 
+    /**
+     * Busca por uma filial dada uma cidade
+     * 
+     * @param city
+     * @return
+     */
     public static ArrayList<Branch> searchBranchesFromCity(String city) {
         String manipulatedCity = city.toLowerCase().strip();
 
@@ -32,10 +55,20 @@ public abstract class Store {
         return branchesFromCity;
     }
 
+    /**
+     * Registra um novo cliente na base de dados
+     * 
+     * @param client
+     */
     public static void registerClient(Client client) {
         clients.add(client);
     }
 
+    /**
+     * Remove um cliente da base de dados
+     * 
+     * @param client
+     */
     public static void removeClient(Client client) {
         clients.remove(client);
     }
@@ -48,7 +81,7 @@ public abstract class Store {
         return name;
     }
 
-    public static String getpassword() {
+    public static String getPassword() {
         return password;
     }
 

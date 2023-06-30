@@ -2,12 +2,26 @@ package models;
 
 import java.util.HashMap;
 
+/**
+ * Representa um cliente nos dados da rede de farmácia
+ * 
+ * @autor Mateus, Henrique e Gabriel
+ * @version 1.1
+ * @since 2023
+ */
 public class Client {
     private String name;
     private String cpf;
     private Integer age;
     private HashMap<Product, Integer> purchasedProducts = new HashMap<>();
 
+    /**
+     * Cria um objeto do tipo <code>Client</code>
+     * 
+     * @param name
+     * @param cpf
+     * @param age
+     */
     public Client(String name, String cpf, Integer age) {
         this.name = name;
         this.cpf = cpf;
@@ -18,13 +32,12 @@ public class Client {
         return this.purchasedProducts;
     }
 
-    public void listPurchasedProducts() {
-        System.out.println("Purchased products by " + this.name + ":");
-        for (Product product : this.purchasedProducts.keySet()) {
-            System.out.println("    " + product.getName() + " (" + this.purchasedProducts.get(product) + ")");
-        }
-    }
-
+    /**
+     * Adiciona um produto nos produtos comprados pelo
+     * cliente em uma unidade
+     * 
+     * @param product
+     */
     public void addProductToPurchasedProducts(Product product) {
         if (this.purchasedProducts.containsKey(product)) {
             this.purchasedProducts.put(product, this.purchasedProducts.get(product) + 1);

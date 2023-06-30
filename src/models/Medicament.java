@@ -1,10 +1,26 @@
 package models;
 
+/**
+ * Representa um produto do tipo medicamento da rede de farmácia
+ * 
+ * @autor Mateus, Henrique e Gabriel
+ * @version 1.1
+ * @since 2023
+ */
 public class Medicament extends Product {
     private String boxColor;
     private Integer dosageMg;
     private Integer minimumAge;
 
+    /**
+     * Cria um objeto do tipo <code>Medicament</code>
+     * 
+     * @param name
+     * @param price
+     * @param boxColor
+     * @param dosageMg
+     * @param minimumAge
+     */
     public Medicament(String name, Integer price, String boxColor, Integer dosageMg, Integer minimumAge) {
         super(name, price);
         this.boxColor = boxColor;
