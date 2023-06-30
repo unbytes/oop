@@ -48,10 +48,11 @@ public abstract class Store {
 
         ArrayList<Branch> branchesFromCity = new ArrayList<Branch>();
         for (Branch branch : branches) {
-            if (branch.getAddress().getCity().toLowerCase().strip().equals(manipulatedCity)) {
+            if (branch.getAddress().getCity().toLowerCase().strip().contains(manipulatedCity)) {
                 branchesFromCity.add(branch);
             }
         }
+
         return branchesFromCity;
     }
 

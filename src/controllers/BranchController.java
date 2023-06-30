@@ -7,6 +7,7 @@ import models.Cosmetic;
 import models.Medicament;
 import models.Product;
 import models.Store;
+import models.Client;
 
 /**
  * Manipula os dados presentes nas filiais para serem utilizados
@@ -52,6 +53,29 @@ public class BranchController {
                 ((Medicament) product).getDosageMg(),
                 ((Medicament) product).getMinimumAge());
         return HTMLTemplate;
+    }
+
+    public String[] generatePurchasedProductsHTMLTemplate(HashMap<Product, Integer> purchasedProducts) {
+        Integer numberOfProducts = purchasedProducts.size();
+        String HTMLTemplates[] = new String[numberOfProducts];
+
+        for (Map.Entry<Product, Integer> entry : purchasedProducts.entrySet()) {
+            String HTMLTemplate = String.format("""
+                    <html>
+                        <body>
+                            Produto: %s
+                            <br>
+                            Quantidade: %d
+                            <br> 
+                        </body>
+                    </html>
+                    """ , entry.getKey().getName(), entry.getValue());
+                    
+            HTMLTemplates[numberOfProducts - 1] = HTMLTemplate;
+            numberOfProducts--;
+        }
+
+        return HTMLTemplates;
     }
 
     /**
@@ -348,5 +372,15 @@ public class BranchController {
         Branch branch = getBranchByUUID(branchUUID);
         Product product = getProductByName(branchUUID, productName);
         branch.removeProduct(product, quantity);
+    }
+
+    public void buyProduct(String branchUUID, Client client, String productName) {
+        Branch branch = getBranchByUUID(branchUUID);
+        Product product = getProductByName(branchUUID, productName);
+        branch.buyProduct(client, product);
+    }
+
+    public HashMap<Product, Integer> getPurchasedProducts(Client client) {
+        return client.getPurchasedProducts();
     }
 }

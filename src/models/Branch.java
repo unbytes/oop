@@ -79,7 +79,7 @@ public class Branch {
         return false;
     }
 
-    public void buyProduct(Client client, Product product) throws Exception {
+    public void buyProduct(Client client, Product product) {
         removeProduct(product, 1);
         client.addProductToPurchasedProducts(product);
     }

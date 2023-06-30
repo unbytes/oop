@@ -11,9 +11,13 @@ import views.layouts.BasicFrame;
 
 public class CreateClient extends BasicFrame {
     private StoreController storeController = new StoreController();
+    private String branchUUID;
 
-    public CreateClient() {
+    public CreateClient(String branchUUID) {
         super();
+
+        this.branchUUID = branchUUID;
+
         makeBody();
     }
 
@@ -55,7 +59,7 @@ public class CreateClient extends BasicFrame {
             storeController.createClient(name, ageInt, CPF);
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
             this.dispose();
-            new Client();
+            new ClientView(branchUUID);
         }
     }
 }

@@ -36,7 +36,7 @@ public class ManageBranch extends BasicFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Client();
+                new ClientView(branchUUID);
             }
         });
 
@@ -46,7 +46,7 @@ public class ManageBranch extends BasicFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Product(branchUUID);
+                new ProductView(branchUUID);
             }
         });
 
