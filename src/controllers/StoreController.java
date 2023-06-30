@@ -99,6 +99,7 @@ public class StoreController {
 
         Integer numberOfBranches = branchesByCity.size();
         String branchesAsHTMLTemplate[] = new String[numberOfBranches];
+        
         for (Integer index = 0; index < numberOfBranches; index++) {
             Branch branch = branchesByCity.get(index);
             String HTMLTemplate = String.format("""
@@ -124,11 +125,6 @@ public class StoreController {
     public void removeBranch(String branchUUID) {
         Branch branch = Store.getBranches().stream().filter(b -> b.getId().equals(branchUUID)).findFirst().orElse(null);
         Store.removeBranch(branch);
-    }
-
-    public Client getClientByCPF(String clientCPF) {
-        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(clientCPF)).findFirst().orElse(null);
-        return client;
     }
                                                 
     /**
