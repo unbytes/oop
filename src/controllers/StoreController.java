@@ -51,6 +51,11 @@ public class StoreController {
         return clientsAsHTMLTemplate;
     }
 
+    public Client getClientByCPF(String CPF) {
+        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(CPF)).findFirst().orElse(null);
+        return client;
+    }
+
     public boolean authenticateStore(String password) {
         if (password.equals(Store.getpassword())) {
             return true;
@@ -63,8 +68,8 @@ public class StoreController {
         Store.removeBranch(branch);
     }
 
-    public void removeClient(String clientUUID) {
-        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(clientUUID)).findFirst().orElse(null);
+    public void removeClient(String CPF) {
+        Client client = getClientByCPF(CPF);
         Store.removeClient(client);
     }
 
@@ -73,8 +78,8 @@ public class StoreController {
         Store.registerClient(client);
     }
 
-    public String getClientName(String clientCPF) {
-        Client client = Store.getClients().stream().filter(c -> c.getCPF().equals(clientCPF)).findFirst().orElse(null);
+    public String getClientName(String CPF) {
+        Client client = getClientByCPF(CPF);
         return client.getName();
     }
 }
