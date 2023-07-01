@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 /**
  * Representa um cliente nos dados da rede de farmácia
- * 
- * @autor Mateus, Henrique e Gabriel
+ *
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  */
@@ -17,7 +17,7 @@ public class Client {
 
     /**
      * Cria um objeto do tipo <code>Client</code>
-     * 
+     *
      * @param name
      * @param cpf
      * @param age
@@ -35,7 +35,7 @@ public class Client {
     /**
      * Adiciona um produto nos produtos comprados pelo
      * cliente em uma unidade
-     * 
+     *
      * @param product
      */
     public void addProductToPurchasedProducts(Product product) {
