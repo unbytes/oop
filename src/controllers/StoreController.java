@@ -9,7 +9,7 @@ import models.Store;
  * Manipula os dados presentes na rede de farmácia para serem
  * utilizados nas views de maneira mais fácil de apresentar
  *
- * @autor Mateus, Henrique e Gabriel
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  */
@@ -17,7 +17,7 @@ public class StoreController {
 
     /**
      * Cria um template em HTML com os detalhes de todas as filiais
-     * 
+     *
      * @return <code>String[]</code>
      */
     public String[] getBranchesAsHTMLTemplate() {
@@ -44,7 +44,7 @@ public class StoreController {
 
     /**
      * Cria um template em HTML com os detalhes de todos os clientes
-     * 
+     *
      * @return <code>String[]</code>
      */
     public String[] getClientesAsHTMLTemplate() {
@@ -74,7 +74,7 @@ public class StoreController {
 
     /**
      * Busca por um cliente dado seu CPF
-     * 
+     *
      * @param CPF
      * @return <code>Client</code> cliente encontrado
      */
@@ -83,10 +83,9 @@ public class StoreController {
         return client;
     }
 
-    
-    /** 
+    /**
      * Faz login na rede de farmácias pela senha informada
-     * 
+     *
      * @param password
      * @return <code>boolean</code> informa se foi possível logar na rede
      */
@@ -97,12 +96,20 @@ public class StoreController {
             return false;
     }
 
+    /**
+     * Procura por uma filial a partir da cidade informada. Cria um template em HTML
+     * com os detalhes das filiais encontradas
+     *
+     * @param city
+     * @return <code>String[]</code> template em HTML com os detalhes das filiais
+     *         encontradas
+     */
     public String[] searchBranchesByCity(String city) {
         ArrayList<Branch> branchesByCity = Store.searchBranchesFromCity(city);
 
         Integer numberOfBranches = branchesByCity.size();
         String branchesAsHTMLTemplate[] = new String[numberOfBranches];
-        
+
         for (Integer index = 0; index < numberOfBranches; index++) {
             Branch branch = branchesByCity.get(index);
             String HTMLTemplate = String.format("""
@@ -122,17 +129,17 @@ public class StoreController {
 
     /**
      * Remove uma filial a partir do UUID informada
-     * 
+     *
      * @param branchUUID
      */
     public void removeBranch(String branchUUID) {
         Branch branch = Store.getBranches().stream().filter(b -> b.getId().equals(branchUUID)).findFirst().orElse(null);
         Store.removeBranch(branch);
     }
-                                                
+
     /**
      * Remove um cliente a partir do seu CPF
-     * 
+     *
      * @param CPF
      */
     public void removeClient(String CPF) {
@@ -142,7 +149,7 @@ public class StoreController {
 
     /**
      * Cria um cliente a partir das informações dadas
-     * 
+     *
      * @param name
      * @param age
      * @param CPF
@@ -154,7 +161,7 @@ public class StoreController {
 
     /**
      * Busca um cliente específico a partir de um CPF
-     * 
+     *
      * @param CPF
      * @return <code>String</code> Nome do cliente encontrado
      */
@@ -162,7 +169,12 @@ public class StoreController {
         Client client = getClientByCPF(clientCPF);
         return client.getName();
     }
-
+    /**
+     * Atualiza os dados de um cliente a partir das informações dadas
+     *
+     * @param clientCPF
+     * @param clientData
+     */
     public void updateClient(String clientCPF, LinkedHashMap<String, String> clientData) {
         Client client = getClientByCPF(clientCPF);
 
