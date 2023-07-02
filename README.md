@@ -34,4 +34,4 @@ Sendo assim, as funcionalidades que devem ser implementadas são as seguintes:
 
 - [Minicenário](docs/DESIGN.md)
 - [Diagrama UML](diagrama_de_classes.jpeg)
-- Diagrama de pacotes
+- [Diagrama de pacotes](diagrama-de-pacotes.jpeg)
