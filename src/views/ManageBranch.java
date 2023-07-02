@@ -8,11 +8,23 @@ import views.components.Title;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe que cria a tela de gerenciamento de filiais
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class ManageBranch extends BasicFrame {
     private GridBagConstraints gbc = new GridBagConstraints();
     private BranchController branchController = new BranchController();
     private String branchUUID;
 
+    /**
+     * Construtor da classe ManageBranch
+     *  
+     * @param branchUUID <code>String</code> UUID da filial
+     */
     public ManageBranch(String branchUUID) {
         super();
 
@@ -21,6 +33,9 @@ public class ManageBranch extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Cria o corpo da tela de gerenciamento de filiais
+     */
     public void makeBody() {
         bodyPanel.setLayout(new GridBagLayout());
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -56,6 +71,10 @@ public class ManageBranch extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria o cabeçalho da tela de gerenciamento de filiais
+     * com o nome e endereço da filial e opção de atualizar o endereço.
+     */
     public void makeBranchInfoHeader() {
         JPanel branchInfoHeaderPanel = new JPanel();
         branchInfoHeaderPanel.setBackground(Color.WHITE);
@@ -101,8 +120,13 @@ public class ManageBranch extends BasicFrame {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.weighty = 1;
         bodyPanel.add(branchInfoHeaderPanel, gbc);
-    }
+    }   
 
+    /**
+     * Faz logout da filial quando a janela é fechada
+     * 
+     * @param branchUUID <code>String</code> UUID da filial
+     */
     public void logoutBranchWhenWindowClose(String branchUUID) {
         WindowListener windowListener = new WindowAdapter() {
             @Override

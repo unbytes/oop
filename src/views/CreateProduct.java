@@ -8,11 +8,23 @@ import views.components.Form;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe responsável por criar a tela de cadastro de produtos.
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class CreateProduct extends BasicFrame {
     private BranchController BranchController = new BranchController();
     private String branchUUID;
     private Form generalProductForm = null;
 
+    /**
+     * Método construtor da classe CreateProduct.
+     * 
+     * @param branchUUID <code>String</code> que representa o UUID da filial.
+     */
     public CreateProduct(String branchUUID) {
         super();
 
@@ -21,6 +33,9 @@ public class CreateProduct extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Método responsável por criar o corpo da tela de cadastro de produtos.
+     */
     public void makeBody() {
         bodyPanel.setLayout(new GridLayout(2, 2));
 
@@ -29,6 +44,9 @@ public class CreateProduct extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Método responsável por criar o formulário de cadastro de produtos.
+     */
     public void makeSignUpForm() {
         String[] productTypes = { "Medicamento", "Cosmético" };
         HashMap<String, String[]> comboBoxOptions = new HashMap<String, String[]>() {
@@ -81,6 +99,11 @@ public class CreateProduct extends BasicFrame {
         bodyPanel.add(productForm);
     }
 
+    /**
+     * Cria um formulário de cadastro de medicamentos.
+     * 
+     * @return <code>Form</code> formulário de cadastro de medicamentos.
+     */
     public Form createMedicamentForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
@@ -96,6 +119,11 @@ public class CreateProduct extends BasicFrame {
         return productForm;
     }
 
+    /**
+     * Cria um formulário de cadastro de cosméticos.
+     * 
+     * @return <code>Form</code> formulário de cadastro de cosméticos.
+     */
     public Form createCosmeticForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
@@ -111,6 +139,14 @@ public class CreateProduct extends BasicFrame {
         return productForm;
     }
 
+    /**
+     * Método responsável por lidar com o cadastro de produtos.
+     * 
+     * @param productForm        <code>Form</code> formulário específico de cadastro
+     *                           de cosmético ou medicamento.
+     * @param generalProductForm <code>Form</code> formulário geral de cadastro de
+     *                           produtos.
+     */
     public void handleSignUp(Form productForm, Form generalProductForm) {
         LinkedHashMap<String, String> fields = productForm.retrieveFieldValues();
         String name = fields.get("Nome");
@@ -128,12 +164,13 @@ public class CreateProduct extends BasicFrame {
                 String boxColor = generalFields.get("Cor da Caixa");
                 String dosage = generalFields.get("Dosagem (mg)");
                 String minimumAge = generalFields.get("Idade Mínima");
-                if ( boxColor.equals("") || dosage.equals("") || minimumAge.equals("")) {
+                if (boxColor.equals("") || dosage.equals("") || minimumAge.equals("")) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-                }else{
+                } else {
                     Integer dosageInt = Integer.parseInt(dosage);
                     Integer minimumAgeInt = Integer.parseInt(minimumAge);
-                    BranchController.addMedicament(branchUUID, name, priceInt, quantityInt, boxColor, dosageInt, minimumAgeInt);
+                    BranchController.addMedicament(branchUUID, name, priceInt, quantityInt, boxColor, dosageInt,
+                            minimumAgeInt);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();
                     new ProductView(branchUUID);
@@ -143,9 +180,9 @@ public class CreateProduct extends BasicFrame {
                 String brand = generalFields.get("Marca");
                 String type = generalFields.get("Tipo");
                 Boolean uv = Boolean.parseBoolean(generalFields.get("UV"));
-                if ( brand.equals("") || type.equals("")) {
+                if (brand.equals("") || type.equals("")) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-                }else{
+                } else {
                     BranchController.addCosmetic(branchUUID, name, priceInt, quantityInt, brand, type, uv);
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     this.dispose();

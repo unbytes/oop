@@ -9,17 +9,30 @@ import views.components.Title;
 import views.components.Button;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe responsável por criar a tela de login de filiais.
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class LoginBranch extends BasicFrame {
     private JTextField searchField = new JTextField(20);
     private StoreController storeController = new StoreController();
     private BranchController branchController = new BranchController();
     private JList<String> branchList;
 
+    /**
+     * Construtor da classe LoginBranch.
+     */
     public LoginBranch() {
         super();
         makeBody();
     }
 
+    /**
+     * Criar o corpo da tela de login de filiais.
+     */
     public void makeBody() {
         bodyPanel.setLayout(new BorderLayout());
 
@@ -28,6 +41,9 @@ public class LoginBranch extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria a lista de filiais e os botões de operações.
+     */
     public void makeBranchList() {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(2, 1));
@@ -46,7 +62,7 @@ public class LoginBranch extends BasicFrame {
         searchField.addActionListener(createSearchAction(searchField));
         searchPanel.add(searchField);
         headerPanel.add(searchPanel);
-        
+
         branchList = new JList<String>(storeController.getBranchesAsHTMLTemplate());
         bodyPanel.add(branchList, BorderLayout.CENTER);
 
@@ -79,6 +95,11 @@ public class LoginBranch extends BasicFrame {
         buttonPanel.add(deleteButton);
     }
 
+    /**
+     * Cria a ação de busca de filiais.
+     * 
+     * @param searchField <code>Action</code> Campo de busca.
+     */
     public Action createSearchAction(JTextField searchField) {
         Action searchAction = new AbstractAction() {
             @Override
@@ -92,6 +113,9 @@ public class LoginBranch extends BasicFrame {
         return searchAction;
     }
 
+    /**
+     * Cria o pop-up de autenticação de filial.
+     */
     public void handleBranchPopUpLogin(String branchUUID) {
         JPasswordField passwordField = new JPasswordField();
         int option = JOptionPane.showOptionDialog(null, passwordField, "Senha: ",
@@ -109,7 +133,10 @@ public class LoginBranch extends BasicFrame {
         }
     }
 
-    public void handleBranchPopUpDelete(String branchUUID){
+    /**
+     * Cria o pop-up de deleção de filial.
+     */
+    public void handleBranchPopUpDelete(String branchUUID) {
         JPasswordField passwordField = new JPasswordField();
         int option = JOptionPane.showOptionDialog(null, passwordField, "Digite a senha da rede:",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);

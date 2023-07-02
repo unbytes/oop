@@ -9,10 +9,22 @@ import controllers.StoreController;
 import views.components.Form;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe responsável por criar a tela de cadastro de clientes.
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class CreateClient extends BasicFrame {
     private StoreController storeController = new StoreController();
     private String branchUUID;
 
+    /**
+     * Construtor da classe CreateClient.
+     * 
+     * @param branchUUID <code>String</code> que representa o UUID da filial.
+     */
     public CreateClient(String branchUUID) {
         super();
 
@@ -21,6 +33,9 @@ public class CreateClient extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Cria o corpo da tela de cadastro de clientes.
+     */
     public void makeBody() {
         bodyPanel.setLayout(new GridLayout(1, 2));
 
@@ -29,6 +44,9 @@ public class CreateClient extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria o formulário de cadastro de clientes.
+     */
     public void makeSignUpForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
@@ -47,6 +65,11 @@ public class CreateClient extends BasicFrame {
         });
     }
 
+    /**
+     * Cria o tratamento de cadastro de clientes.
+     * 
+     * @param fields <code>LinkedHashMap&lt;String, String&gt;</code> campos do formulário.
+     */
     public void handleSignUp(LinkedHashMap<String, String> fields) {
         String name = fields.get("Name");
         String age = fields.get("Age");

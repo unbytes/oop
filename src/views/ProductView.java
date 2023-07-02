@@ -13,6 +13,13 @@ import views.components.IntegerField;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe que cria a tela de produtos
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class ProductView extends BasicFrame {
     private JTextField searchField = new JTextField(20);
     private JPanel handleProductsPanel = new JPanel();
@@ -22,6 +29,11 @@ public class ProductView extends BasicFrame {
     private BranchController branchController = new BranchController();
     private String branchUUID;
 
+    /**
+     * Construtor da classe ProductView
+     * 
+     * @param branchUUID <code>String</code> UUID da filial
+     */
     public ProductView(String branchUUID) {
         super();
 
@@ -30,6 +42,9 @@ public class ProductView extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Atualiza a lista de produtos
+     */
     public void refreshProductList() {
         if (handleProductsPanel != null) {
             handleProductsPanel.revalidate();
@@ -37,6 +52,9 @@ public class ProductView extends BasicFrame {
         }
     }
 
+    /**
+     * Estiliza o painel de lista de produtos
+     */
     public void styleProductListPanel() {
         refreshProductList();
         if (productListPanel != null) {
@@ -46,7 +64,13 @@ public class ProductView extends BasicFrame {
             productListPanel.setBackground(Color.WHITE);
         }
     }
-
+        
+    /**
+     * Cria a ação de busca de produtos.
+     * 
+     * @param searchField <code>JTextField</code> Campo de busca
+     * @return <code>Action</code> Ação de busca
+     */
     public Action createSearchAction(JTextField searchField) {
         Action searchAction = new AbstractAction() {
             @Override
@@ -69,7 +93,12 @@ public class ProductView extends BasicFrame {
 
         return searchAction;
     }
-
+    
+    /**
+     * Cria o painel de lista de produtos
+     * 
+     * @param productName <code>String</code> Nome do produto
+     */
     public void initProductList(String productName) {
         String products[] = branchController.searchProductsByWordAsHTMLTemplate(branchUUID, productName);
 
@@ -85,6 +114,9 @@ public class ProductView extends BasicFrame {
         styleProductListPanel();
     }
 
+    /**
+     * Cria o corpo da tela de produtos
+     */
     public void makeBody() {
         bodyPanel.setLayout(new BorderLayout());
 
@@ -149,6 +181,9 @@ public class ProductView extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria o pop-up de confirmação de exclusão de produto
+     */
     public void handleDeleteProductPopUpForm() {
         String selectedValue = productList.getSelectedValue();
         if (selectedValue != null) {
@@ -165,6 +200,9 @@ public class ProductView extends BasicFrame {
         }
     }
 
+    /**
+     * Cria o formulário de atualização de medicamento
+     */
     public void handleUpdateProductForm() {
         String selectedValue = productList.getSelectedValue();
         if (selectedValue != null) {
@@ -195,6 +233,11 @@ public class ProductView extends BasicFrame {
         }
     }
 
+    /**
+     * Cria os campos básicos de um formulário de produto
+     * 
+     * @return <code>LinkedHashMap&lt;String, Form.FieldTypes&gt;</code> Componentes do
+     */
     public LinkedHashMap<String, Form.FieldTypes> createBasicProductFormComponents() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
@@ -206,6 +249,12 @@ public class ProductView extends BasicFrame {
         return components;
     }
 
+    /**
+     * Cria o formulário de atualização de medicamento
+     * 
+     * @param productName <code>String</code> Nome do produto
+     * @return <code>Form</code> Formulário de atualização de medicamento
+     */
     public Form createMedicamentUpdateForm(String productName) {
         LinkedHashMap<String, Form.FieldTypes> components = createBasicProductFormComponents();
         components.put("Cor da Caixa", Form.FieldTypes.TEXT);
@@ -229,6 +278,12 @@ public class ProductView extends BasicFrame {
         return updateProductForm;
     }
 
+    /**
+     * Cria o formulário de atualização de cosmético
+     * 
+     * @param productName <code>String</code> Nome do produto
+     * @return <code>Form</code> Formulário de atualização de cosmético
+     */
     public Form createCosmeticUpdateForm(String productName) {
         LinkedHashMap<String, Form.FieldTypes> components = createBasicProductFormComponents();
         components.put("Marca", Form.FieldTypes.TEXT);

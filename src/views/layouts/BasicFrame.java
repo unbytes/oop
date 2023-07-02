@@ -6,12 +6,22 @@ import views.Home;
 import views.components.Button;
 import views.components.Title;
 
+/**
+ * Classe que cria o frame básico para as telas do sistema.
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public abstract class BasicFrame extends JFrame {
     protected JPanel headerPanel = new JPanel();
     protected JPanel bodyPanel = new JPanel();
     protected JPanel footerPanel = new JPanel();
     protected Color redColor = new Color(218, 0, 55);
 
+    /**
+     * Criar o frame básico para as telas do sistema.
+     */
     public BasicFrame() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setMinimumSize(new Dimension(1080, 720));
@@ -27,6 +37,10 @@ public abstract class BasicFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Criar o cabeçalho para as telas do sistema.
+     * 
+     */
     public void makeHeader() {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(0, 50));
@@ -43,6 +57,10 @@ public abstract class BasicFrame extends JFrame {
 
     public abstract void makeBody();
 
+    /**
+     * Criar o rodapé para as telas do sistema.
+     * 
+     */
     public void makeFooter() {
         footerPanel.setLayout(new BorderLayout());
         footerPanel.setPreferredSize(new Dimension(0, 50));
@@ -53,6 +71,11 @@ public abstract class BasicFrame extends JFrame {
         this.add(footerPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Cria o botão de voltar para as telas do sistema.
+     * 
+     * @throws Exception Caso não encontre a imagem do botão.
+     */
     public void createBackButton() {
         try {
             ImageIcon icon = new ImageIcon("src/assets/return_white_button.png");
