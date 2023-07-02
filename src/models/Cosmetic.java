@@ -15,11 +15,12 @@ public class Cosmetic extends Product {
     /**
      * Cria um objeto do tipo <code>Cosmetic</code>
      *
-     * @param name
-     * @param price
-     * @param brand
-     * @param type
-     * @param containsSunProtectionFactor
+     * @param name                        <code>String</code> Nome do produto
+     * @param price                       <code>Integer</code> Preço do produto
+     * @param brand                       <code>String</code> Marca do produto
+     * @param type                        <code>String</code> Tipo do produto
+     * @param containsSunProtectionFactor <code>Boolean</code> Se o produto contém
+     *                                    fator de proteção solar
      */
     public Cosmetic(String name, Integer price, String brand, String type, Boolean containsSunProtectionFactor) {
         super(name, price);

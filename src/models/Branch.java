@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Representa uma filial.
- * Contem informacoes sobre id, senha, endereco e produtos.
+ * Contem informações sobre id, senha, endereço e produtos.
  *
  * @author Mateus, Henrique e Gabriel
  * @version 1.1
@@ -23,7 +23,7 @@ public class Branch {
      * Cria um objeto do tipo Branch
      *
      * @param password Senha de acesso recebida pelo gerente
-     * @param address  Endereco da filial
+     * @param address  Endereço da filial
      */
     public Branch(String password, Address address) {
         this.id = UUID.randomUUID().toString().split("-")[0];
@@ -36,7 +36,7 @@ public class Branch {
      * Caso nao sejam encontrados produtos com a expressão, retorna
      * <code>null</code>.
      *
-     * @param word A expressao a ser procurada
+     * @param word A expressão a ser procurada
      * @return ArrayList <code>products</code>
      */
     public ArrayList<Product> searchProductsByWord(String word) {

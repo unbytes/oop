@@ -1,8 +1,10 @@
 package tests;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import java.util.*;
-import org.junit.*;
 import controllers.StoreController;
 import models.Branch;
 import models.Client;
@@ -25,7 +27,7 @@ public class TestStoreController {
      * Esse método é executado antes de cada teste e limpa as listas de filiais e
      * clientes.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         ArrayList<Branch> branches = Store.getBranches();
         ArrayList<Branch> clients = Store.getBranches();
