@@ -4,7 +4,7 @@ package models;
  * Representa o endereço da filial.
  * Contem informacoes sobre cidade e regiao.
  *
- * @autor Mateus, Henrique e Gabriel
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  *

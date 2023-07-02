@@ -2,8 +2,8 @@ package models;
 
 /**
  * Representa um produto do tipo medicamento da rede de farmácia
- * 
- * @autor Mateus, Henrique e Gabriel
+ *
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  */
@@ -14,7 +14,7 @@ public class Medicament extends Product {
 
     /**
      * Cria um objeto do tipo <code>Medicament</code>
-     * 
+     *
      * @param name
      * @param price
      * @param boxColor

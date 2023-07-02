@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Representa a base de dados da rede de farmácia "Drogas Lícitas"
- * 
- * @autor Mateus, Henrique e Gabriel
+ *
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  */
@@ -16,8 +16,8 @@ public abstract class Store {
     private static ArrayList<Client> clients = new ArrayList<Client>();
 
     /**
-     * Registar uma nova filial na base de dados
-     * 
+     * Registra uma nova filial na base de dados
+     *
      * @param branch
      */
     public static void registerBranch(Branch branch) {
@@ -26,7 +26,7 @@ public abstract class Store {
 
     /**
      * Remove uma filial da base de dados
-     *  
+     *
      * @param branch
      */
     public static void removeBranch(Branch branch) {
@@ -39,9 +39,9 @@ public abstract class Store {
 
     /**
      * Busca por uma filial dada uma cidade
-     * 
-     * @param city
-     * @return
+     *
+     * @param city Cidade a ser buscada
+     * @return <code>ArrayList Branch</code>
      */
     public static ArrayList<Branch> searchBranchesFromCity(String city) {
         String manipulatedCity = city.toLowerCase().strip();
@@ -58,7 +58,7 @@ public abstract class Store {
 
     /**
      * Registra um novo cliente na base de dados
-     * 
+     *
      * @param client
      */
     public static void registerClient(Client client) {
@@ -67,7 +67,7 @@ public abstract class Store {
 
     /**
      * Remove um cliente da base de dados
-     * 
+     *
      * @param client
      */
     public static void removeClient(Client client) {

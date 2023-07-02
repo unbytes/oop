@@ -2,8 +2,8 @@ package models;
 
 /**
  * Representa um produto, de forma abstrata, na da rede de farmácia
- * 
- * @autor Mateus, Henrique e Gabriel
+ *
+ * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
  */
@@ -13,7 +13,7 @@ public abstract class Product {
 
     /**
      * Cria um objeto do tipo <code>Product</code>
-     * 
+     *
      * @param name
      * @param price
      */
