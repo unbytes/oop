@@ -16,6 +16,9 @@ import models.Client;
  * @author Mateus, Henrique e Gabriel
  * @version 1.1
  * @since 2023
+ * @see Branch
+ * @see views.ManageBranch
+ * @see Store
  */
 public class BranchController {
     /**
@@ -25,6 +28,8 @@ public class BranchController {
      * @param product <code>Product</code> Produto a ser gerado o template
      * @param branch  <code>Branch</code> Filial a qual o produto pertence
      * @return <code>String</code> Template HTML de um Medicamento
+     * @see Product
+     * @see Branch
      */
     public String generateMedicamentHTMLTemplate(Product product, Branch branch) {
         String HTMLTemplate = String.format("""
@@ -58,8 +63,10 @@ public class BranchController {
     /**
      * Cria um template em HTML com os detalhes dos produtos comprados
      *
-     * @param purchasedProducts <code>HashMap</code> De produtos comprados
+     * @param purchasedProducts <code>HashMap&lt;Product, Integer&gt;</code> De
+     *                          produtos comprados
      * @return <code>String[]</code> Template HTML dos produtos comprados
+     * @see Product
      */
     public String[] generatePurchasedProductsHTMLTemplate(HashMap<Product, Integer> purchasedProducts) {
         Integer numberOfProducts = purchasedProducts.size();
@@ -91,6 +98,8 @@ public class BranchController {
      * @param product <code>Product</code> Produto a ser gerado o template
      * @param branch  <code>Branch</code> Filial a qual o produto pertence
      * @return <code>String</code> Template HTML de um Cosmético
+     * @see Product
+     * @see Branch
      */
     public String generateCosmeticHTMLTemplate(Product product, Branch branch) {
         String HTMLTemplate = String.format("""
@@ -127,6 +136,7 @@ public class BranchController {
      * @param branchUUID <code>String</code> UUID da filial
      * @param word       <code>String</code> expressão a ser buscada
      * @return <code>String[]</code> Array de strings com os produtos encontrados
+     * @see Branch#searchProductsByWord(String)
      */
     public String[] searchProductsByWordAsHTMLTemplate(String branchUUID, String word) {
         Branch branch = getBranchByUUID(branchUUID);
@@ -155,6 +165,7 @@ public class BranchController {
      *
      * @param product <code>Product</code> Produto a ser identificado
      * @return <code>String</code> Tipo do produto traduzido em um string
+     * @see Product
      */
     public String handleProductType(Product product) {
         if (product instanceof Medicament) {
@@ -170,11 +181,13 @@ public class BranchController {
      *
      * @param branchUUID      <code>String</code> UUID da filial
      * @param productName     <code>String</code> Nome do medicamento
-     * @param productPrice    Preço do medicamento
-     * @param productQuantity Quantidade do medicamento
+     * @param productPrice    <code>Integer</code> Preço do medicamento
+     * @param productQuantity <code>Integer</code> Quantidade do medicamento
      * @param boxColor        <code>String</code> Cor da caixa do medicamento
      * @param dosageMg        <code>Integer</code> Dosagem em mg do medicamento
-     * @param minimumAge      Idade mínima para consumir o medicamento
+     * @param minimumAge      <code>Integer</code> Idade mínima para consumir o
+     *                        medicamento
+     * @see Branch#addProduct(Product, Integer)
      */
     public void addMedicament(String branchUUID, String productName, Integer productPrice, Integer productQuantity,
             String boxColor, Integer dosageMg, Integer minimumAge) {
@@ -189,11 +202,12 @@ public class BranchController {
      *
      * @param branchUUID      <code>String</code> UUID da filial
      * @param productName     <code>String</code> Nome do cosmético
-     * @param productPrice    Preço do cosmético
-     * @param productQuantity Quantidade do cosmético
+     * @param productPrice    <code>Integer</code> Preço do cosmético
+     * @param productQuantity <code>Integer</code> Quantidade do cosmético
      * @param brand           <code>String</code> Marca do cosmético
      * @param type            <code>String</code> Tipo do cosmético
      * @param uv              <code>Boolean</code> Proteção solar do cosmético
+     * @see Branch#addProduct(Product, Integer)
      */
     public void addCosmetic(String branchUUID, String productName, Integer productPrice, Integer productQuantity,
             String brand, String type, Boolean uv) {
@@ -209,6 +223,7 @@ public class BranchController {
      * @param branchUUID  <code>String</code> UUID da filial
      * @param productName <code>String</code> Nome do produto
      * @return <code>Product</code> produto encontrado
+     * @see Branch#searchProductByName(String)
      */
     public Product getProductByName(String branchUUID, String productName) {
         Branch branch = getBranchByUUID(branchUUID);
@@ -261,6 +276,7 @@ public class BranchController {
      * @param password   <code>String</code> Senha da filial
      * @return <code>boolean</code> informa se foi possível ou não
      *         a autenticação de uma filial
+     * @see Branch#login(String)
      */
     public boolean authenticateBranch(String branchUUID, String password) {
         Branch branch = getBranchByUUID(branchUUID);
@@ -293,6 +309,7 @@ public class BranchController {
      * @param newRegion  <code>String</code> Nova região da filial
      * @return <code>boolean</code> informa se o update do
      *         endereço foi possível ou não
+     * @see Address
      */
     public boolean updateBranchAddress(String branchUUID, String newCity, String newRegion) {
         Address newAddress = new Address(newCity, newRegion);
@@ -331,6 +348,8 @@ public class BranchController {
      * @param productType <code>String</code> Tipo do produto
      * @param productData <code>LinkedHashMap&lt;String, String&gt;</code> Dados do
      *                    produto
+     * @see Branch#addProduct(Product, Integer)
+     * @see Branch#removeProduct(Product)
      */
     public void updateProduct(String branchUUID, String productName, String productType,
             LinkedHashMap<String, String> productData) {
@@ -362,6 +381,7 @@ public class BranchController {
      *
      * @param branchUUID  <code>String</code> UUID da filial
      * @param productName <code>String</code> Nome do produto
+     * @see Branch#removeProduct(Product)
      */
     public void removeProduct(String branchUUID, String productName) {
         Branch branch = getBranchByUUID(branchUUID);
@@ -375,7 +395,8 @@ public class BranchController {
      *
      * @param branchUUID  <code>String</code> UUID da filial
      * @param productName <code>String</code> Nome do produto
-     * @param quantity    Quantidade a ser removida
+     * @param quantity    <code>Integer</code> Quantidade a ser removida
+     * @see Branch#removeProduct(Product, Integer)
      */
     public void removeProduct(String branchUUID, String productName, Integer quantity) {
         Branch branch = getBranchByUUID(branchUUID);
@@ -390,6 +411,7 @@ public class BranchController {
      * @param branchUUID  <code>String</code> UUID da filial
      * @param client      <code>Client</code> Cliente que está comprando
      * @param productName <code>String</code> Nome do produto
+     * @see Branch#buyProduct(Client, Product)
      */
     public void buyProduct(String branchUUID, Client client, String productName) {
         Branch branch = getBranchByUUID(branchUUID);
