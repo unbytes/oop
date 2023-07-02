@@ -28,7 +28,7 @@ public class ClientView extends BasicFrame {
     /**
      * Construtor da classe ClientView
      * 
-     * @param branchUUID
+     * @param branchUUID <code>String</code> UUID da filial
      */
     public ClientView(String branchUUID) {
         super();
