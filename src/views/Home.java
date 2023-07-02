@@ -5,7 +5,17 @@ import views.components.Button;
 import views.components.Title;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe que cria a tela inicial do programa
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class Home extends BasicFrame {
+    /**
+     * Construtor da classe Home
+     */
     public Home() {
 
         super();
@@ -13,6 +23,9 @@ public class Home extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Cria o corpo da tela inicial
+     */
     public void makeBody() {
         this.bodyPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

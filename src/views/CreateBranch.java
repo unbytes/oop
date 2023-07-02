@@ -7,14 +7,27 @@ import controllers.BranchController;
 import views.components.Form;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe responsável por criar a tela de cadastro de filial.
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class CreateBranch extends BasicFrame {
     private BranchController branchController = new BranchController();
 
+    /**
+     * Construtor da classe CreateBranch.
+     */
     public CreateBranch() {
         super();
         makeBody();
     }
 
+    /**
+     * Criar o corpo da tela de cadastro de filial.
+     */
     public void makeBody() {
         bodyPanel.setLayout(new GridLayout(1, 2));
 
@@ -23,6 +36,9 @@ public class CreateBranch extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria o formulário de cadastro de filial.
+     */
     public void makeSignUpForm() {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
@@ -42,6 +58,11 @@ public class CreateBranch extends BasicFrame {
         });
     }
 
+    /**
+     * Cria campo de texto para cadastro de senha.
+     * 
+     * @param fields <code>LinkedHashMap&lt;String, String&gt;</code> contendo os campos do formulário.
+     */
     public void handleSignUp(LinkedHashMap<String, String> fields) {
         String password = fields.get("Senha").strip();
         String confirmPassword = fields.get("Confirmar senha").strip();

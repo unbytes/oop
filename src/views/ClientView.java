@@ -10,6 +10,13 @@ import views.components.Button;
 import views.components.Form;
 import views.layouts.BasicFrame;
 
+/**
+ * Classe que cria a tela de clientes
+ * 
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ */
 public class ClientView extends BasicFrame {
     private StoreController storeController = new StoreController();
     private JPanel handleClientPanel = new JPanel();
@@ -18,6 +25,11 @@ public class ClientView extends BasicFrame {
     private String branchUUID;
     private Form currentUpdateForm;
 
+    /**
+     * Construtor da classe ClientView
+     * 
+     * @param branchUUID
+     */
     public ClientView(String branchUUID) {
         super();
 
@@ -26,6 +38,9 @@ public class ClientView extends BasicFrame {
         makeBody();
     }
 
+    /**
+     * Cria o corpo da tela de clientes
+     */
     public void makeBody() {
         bodyPanel.setLayout(new BorderLayout());
 
@@ -34,20 +49,29 @@ public class ClientView extends BasicFrame {
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Atualiza a lista de clientes
+     */
     public void refreshClientList() {
         handleClientPanel.repaint();
         handleClientPanel.revalidate();
         handleClientPanel.setBackground(Color.WHITE);
     }
 
+    /**
+     * Estiliza a lista de clientes
+     */
     public void styleClientListPanel() {
         refreshClientList();
         clientListPanel.setPreferredSize(new Dimension(500, 500));
         clientListPanel.setBorder(BorderFactory.createEmptyBorder());
         clientListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         clientListPanel.setBackground(Color.WHITE);
-    }
+    }  
 
+    /**
+     * Inicializa a lista de clientes
+     */
     public void initClientList() {
         String clients[] = storeController.getClientesAsHTMLTemplate();
 
@@ -63,6 +87,10 @@ public class ClientView extends BasicFrame {
         styleClientListPanel();
     }
 
+    /**
+     * Cria a lista de clientes com todos os botões
+     * de operações.
+     */
     public void makeClientList() {
         Title titleLabel = new Title("Clientes");
         bodyPanel.add(titleLabel, BorderLayout.NORTH);
@@ -108,17 +136,30 @@ public class ClientView extends BasicFrame {
         bodyPanel.add(handleClientPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria um pop-up de login
+     * 
+     * @param clientCPF <code>String</code> CPF do cliente
+     */
     public void handleClientPopUpLogin(String clientCPF) {
         String clientName = storeController.getClientName(clientCPF);
         JOptionPane.showMessageDialog(null, "Bem vindo, " + clientName);
     }
 
+    /**
+     * Cria um pop-up de exclusão
+     * 
+     * @param clientCPF <code>String</code> CPF do cliente
+     */
     public void handleClientPopUpDelete(String clientCPF) {
         storeController.removeClient(clientCPF);
         initClientList();
         JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
     }
 
+    /**
+     * Cria o formulário de atualização
+     */
     public void handleUpdateClientForm() {
         String selectedValue = clientList.getSelectedValue();
         if (selectedValue != null) {
@@ -143,6 +184,11 @@ public class ClientView extends BasicFrame {
         }
     }
 
+    /**
+     * Cria o formulário de atualização
+     * 
+     * @param clientCPF <code>String</code> CPF do cliente
+     */
     public Form createClientUpdateForm(String clientCPF) {
         LinkedHashMap<String, Form.FieldTypes> components = new LinkedHashMap<String, Form.FieldTypes>() {
             {
