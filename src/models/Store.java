@@ -18,7 +18,7 @@ public abstract class Store {
     /**
      * Registra uma nova filial na base de dados
      *
-     * @param branch
+     * @param branch <code>Branch</code> Filial a ser registrada
      */
     public static void registerBranch(Branch branch) {
         branches.add(branch);
@@ -27,7 +27,7 @@ public abstract class Store {
     /**
      * Remove uma filial da base de dados
      *
-     * @param branch
+     * @param branch <code>Branch</code> Filial a ser removida
      */
     public static void removeBranch(Branch branch) {
         branches.remove(branch);
@@ -40,8 +40,8 @@ public abstract class Store {
     /**
      * Busca por uma filial dada uma cidade
      *
-     * @param city Cidade a ser buscada
-     * @return <code>ArrayList Branch</code>
+     * @param city <code>String</code> Cidade a ser buscada
+     * @return <code>ArrayList&lt;Branch&gt;</code> Lista de filiais encontradas
      */
     public static ArrayList<Branch> searchBranchesFromCity(String city) {
         String manipulatedCity = city.toLowerCase().strip();
@@ -59,7 +59,7 @@ public abstract class Store {
     /**
      * Registra um novo cliente na base de dados
      *
-     * @param client
+     * @param client <code>Client</code> Cliente a ser registrado
      */
     public static void registerClient(Client client) {
         clients.add(client);
@@ -68,7 +68,7 @@ public abstract class Store {
     /**
      * Remove um cliente da base de dados
      *
-     * @param client
+     * @param client <code>Client</code> Cliente a ser removido
      */
     public static void removeClient(Client client) {
         clients.remove(client);

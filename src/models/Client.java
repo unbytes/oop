@@ -18,9 +18,9 @@ public class Client {
     /**
      * Cria um objeto do tipo <code>Client</code>
      *
-     * @param name
-     * @param cpf
-     * @param age
+     * @param name <code>String</code> Nome do cliente
+     * @param cpf  <code>String</code> CPF do cliente
+     * @param age  <code>Integer</code> Idade do cliente
      */
     public Client(String name, String cpf, Integer age) {
         this.name = name;
@@ -36,7 +36,7 @@ public class Client {
      * Adiciona um produto nos produtos comprados pelo
      * cliente em uma unidade
      *
-     * @param product
+     * @param product <code>Product</code> Produto comprado
      */
     public void addProductToPurchasedProducts(Product product) {
         if (this.purchasedProducts.containsKey(product)) {

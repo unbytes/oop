@@ -14,8 +14,8 @@ public abstract class Product {
     /**
      * Cria um objeto do tipo <code>Product</code>
      *
-     * @param name
-     * @param price
+     * @param name  <code>String</code> com o nome do produto
+     * @param price Preço do produto
      */
     public Product(String name, Integer price) {
         this.name = name;

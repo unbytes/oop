@@ -16,8 +16,8 @@ public class Address {
     /**
      * Cria um objeto do tipo Address
      *
-     * @param city   A cidade
-     * @param region A região
+     * @param city   <code>String</code> A cidade da filial
+     * @param region <code>String</code> A região da filial
      */
     public Address(String city, String region) {
         this.city = city;
