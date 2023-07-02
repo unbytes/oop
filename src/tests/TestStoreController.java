@@ -8,9 +8,23 @@ import models.Branch;
 import models.Client;
 import models.Store;
 
+/**
+ * Classe de testes para a classe StoreController.
+ *
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ * @see StoreController
+ * @see Store
+ */
 public class TestStoreController {
     private StoreController storeController = new StoreController();
 
+    /**
+     * Configuração inicial para cada teste.
+     * Esse método é executado antes de cada teste e limpa as listas de filiais e
+     * clientes.
+     */
     @Before
     public void setUp() {
         ArrayList<Branch> branches = Store.getBranches();
@@ -19,6 +33,14 @@ public class TestStoreController {
         clients.clear();
     }
 
+    /**
+     * Testa a remoção de um cliente cadastrado na rede de farmácias.
+     * O teste verifica se os clientes foram cadastrados corretamente e se a remoção
+     * foi feita com sucesso.
+     *
+     * @see StoreController#createClient(String, int, String)
+     * @see StoreController#removeClient(String)
+     */
     @Test
     public void testDeleteClient() {
         storeController.createClient("Mateus", 19, "892.337.491-18");
@@ -32,7 +54,7 @@ public class TestStoreController {
         assertEquals(2, clients.size());
 
         String names[] = new String[2];
-        String expectedNames[] = {"Henrique", "Gabriel"};
+        String expectedNames[] = { "Henrique", "Gabriel" };
         for (int i = 0; i < clients.size(); i++) {
             names[i] = clients.get(i).getName();
         }

@@ -10,10 +10,25 @@ import models.Cosmetic;
 import models.Medicament;
 import models.Store;
 
+/**
+ * Classe de testes para a classe BranchController.
+ *
+ * @author Mateus, Henrique e Gabriel
+ * @version 1.0
+ * @since 2023
+ * @see BranchController
+ * @see Branch
+ */
 public class TestBranchController {
 	private final String password = "12345";
 	private BranchController branchController = new BranchController();
 
+	/**
+	 * Configuração inicial para cada teste.
+	 *
+	 * Esse método é executado antes de cada teste e limpa as listas de filiais e
+	 * clientes.
+	 */
 	@Before
 	public void setUp() {
 		ArrayList<Branch> branches = Store.getBranches();
@@ -22,6 +37,14 @@ public class TestBranchController {
 		clients.clear();
 	}
 
+	/**
+	 * Testa o cadastro de uma filial na rede de farmácias.
+	 * <p>
+	 * Este teste verifica se o método <code>registerBranch()</code>
+	 * cadastrou as filiais corretamente.
+	 *
+	 * @see BranchController#registerBranch(String, String, String)
+	 */
 	@Test
 	public void testCreateBranch() {
 		branchController.registerBranch(password, "Brasília", "Gama");
@@ -33,6 +56,16 @@ public class TestBranchController {
 		assertEquals("São Paulo | Setor Bueno\n", branches.get(1).getAddress().toString());
 	}
 
+	/**
+	 * Testa a busca de um produto por expressão existente em seu nome.
+	 * <p>
+	 * Este teste verifica se o método
+	 * <code>searchProductsByWordAsHTMLTemplate()</code>
+	 * retorna corretamente um array de representações HTML dos produtos
+	 * encontrados.
+	 *
+	 * @see BranchController#searchProductsByWordAsHTMLTemplate(int, String)
+	 */
 	@Test
 	public void testSearchProductByWordAsHTMLTemplate() {
 		Address address1 = new Address("São Paulo", "Pinheiros");
