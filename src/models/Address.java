@@ -2,7 +2,7 @@ package models;
 
 /**
  * Representa o endereço da filial.
- * Contem informacoes sobre cidade e regiao.
+ * Contem informações sobre cidade e região.
  *
  * @author Mateus, Henrique e Gabriel
  * @version 1.1
@@ -17,7 +17,7 @@ public class Address {
      * Cria um objeto do tipo Address
      *
      * @param city   A cidade
-     * @param region A regiao
+     * @param region A região
      */
     public Address(String city, String region) {
         this.city = city;
